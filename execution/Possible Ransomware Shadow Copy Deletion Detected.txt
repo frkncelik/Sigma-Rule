@@ -1,0 +1,28 @@
+title: Possible Ransomware Shadow Copy Deletion Detected
+description: Shadow copies are snapshots of part of the filesystem, used for backups
+  and restore points. Ransomware may delete these to prevent the user from restoring
+  files that it has encrypted or destroyed. Aside from ransomware, shadow copy deletion
+  may also be used by other types of malware to remove forensic evidence of malicious
+  activity.
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - wmic shadowcopy delete
+    ServiceName:
+    - cmd.exe
+    EventID:
+    - 4688
+fields:
+- Account_Name
+- Computer_Name
+level: medium
+tags:
+- attack.execution
+- attack.T1490
+date: 2020/03/13
