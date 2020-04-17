@@ -1,0 +1,34 @@
+title: Cmdkey.Exe Malicious Activity 
+description: Cmdkey.Exe Malicious Activity Detected
+author: Furkan Celik
+reference:
+- https://www.peew.pw/blog/2017/11/26/exploring-cmdkey-an-edge-case-for-privilege-escalation
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cmdkey
+tags:
+- attack.Initial_Access
+- attack.T1078
+- attack.T1003
+status: stable
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 1
+    Image:
+    - '*System32\cmdkey.exe*'
+    ParentImage:
+    - C:\Windows\system32\cmd.exe
+    - C:\Windows\SysWOW64\cmdkey.exe
+    CommandLine:
+    - cmdkey  /list
+fields:
+- Computer
+- User
+- Image
+- CommandLine
+falsepositives:
+- unknown
+level: high
