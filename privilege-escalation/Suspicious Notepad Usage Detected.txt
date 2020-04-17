@@ -1,0 +1,32 @@
+title: Suspicious Notepad Usage Detected
+description: Detects suspicious use of notepad.exe with command line parameters or in a suspicious directory, which is likely caused by some PoC or detection evasion.
+author: Furkan Celik
+date: 2020/04/16
+tags:
+- attack.T1055
+- attack.Privilege_Escalation
+status: experimental
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection AND ( selection1 AND NOT filter )
+  selection:
+    CommandLine:
+    - '*notepad.exe*'
+    EventID:
+    - 1
+  selection1:
+    Image:
+    - '*notepad.exe*'
+    EventID:
+    - 1
+  filter:
+    Image:
+    - '*\Windows\Sys*'
+    - C:\WINDOWS\system32\notepad.exe
+fields:
+- ""
+falsepositives:
+- unknown
+level: medium
