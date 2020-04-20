@@ -1,0 +1,21 @@
+title: Gathering Information About Malicious USB
+description: Shows the USB information connected to the computer. By looking at this
+  information, it is easier for us to detect pests transmitted by usb
+reference:
+- https://forensixchange.com/posts/19_08_03_usb_storage_forensics_1/
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: 'selection  '
+  selection:
+    EventID:
+    - 20001
+fields:
+- host
+- time
+- product
+- vendor
+level: medium
