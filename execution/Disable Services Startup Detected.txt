@@ -1,0 +1,24 @@
+title: Disable Services Startup Detected
+description: A process attempted to disable a common security related service from starting at system boot.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.defense_evasion
+- attack.t1204
+- attack.t1059
+date: 2020/04/17
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - cmd.exe /c sc stop wuauserv
+    - stop wuauserv
+fields:
+- computer
+falsepositives:
+- unknown
+level: medium
