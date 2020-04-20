@@ -1,0 +1,17 @@
+title: Admin User RDP
+description: It shows those who log in remotely with admin account.
+status: stable
+author: Furkan Celik
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4624
+    LogonType: 10
+    AuthenticationPackageName: Negotiate
+    AccountName: Admin-*
+  condition: selection
+falsepositives:
+- You can do this
+level: low
