@@ -1,0 +1,23 @@
+title: Security-enabled global and local group was created
+description: Created a Security Local group identified in New Group.  just created
+  a Security Global group identified in New Group.
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: 'selection OR selection1 '
+  selection:
+    EventID:
+    - 4727
+  selection1:
+    EventID:
+    - 4731
+fields:
+- Group_Name
+- host_name
+- message
+falsepositives:
+- You can do this yourself
+level: medium
