@@ -1,0 +1,65 @@
+title: Backdoor Detection On SQL Servers
+description: An attack targeting the aviation industry has been identified. You can
+  detect the url and ip list of this attack by installing backdoor on SQL servers
+  on your system.
+author: Furkan Celik
+status: stable
+date: 2020/04/01
+Reference:
+- https://github.com/guardicore/labs_campaigns/tree/master/Vollgar
+- https://thehackernews.com/2020/04/backdoor-.html
+tags:
+- attack.T1086
+- attack.T1083
+- attack.T1132
+- attack.T1088
+logsource:
+  product: proxy
+detection:
+  condition: 'selection '
+  selection:
+    url:
+    - a.vollar.ga
+    - aa.vollar.ga
+    - b.vollar.ga
+    - c.vollar.ga
+    - ca.vollar.gad.vollar.ga
+    - da.vollar.ga
+    - f.vollar.ga
+    - h.vollar.ga
+    - ja.vollar.ga
+    - k.vollar.ga
+    - m.vollar.ga
+    - ma.vollar.ga
+    - n.vollar.ga
+    - na.vollar.ga
+    - o.vollar.ga
+    - oa.vollar.ga
+    - ob.vollar.ga
+    - s.vollar.ga
+    - sa.vollar.ga
+    - t.vollar.ga
+    - ta.vollar.ga
+    - v.vollar.ga
+    - x.vollar.ga
+    - xa.vollar.ga
+    - z.vollar.ga
+    ip:
+    - 183.131.3.196
+    - 192.37.90.118
+    - 39.109.116.162
+    - 154.221.26.108
+    - 103.53.211.94
+    - 185.172.66.203
+    - 51.105.249.223
+    - 154.211.14.66
+    - 154.221.19.221
+    - 145.239.23.7
+    - 180.97.220.5
+    - 207.180.202.208
+fields:
+- srcip
+- dstip
+- action
+- url
+level: high
