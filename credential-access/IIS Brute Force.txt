@@ -1,0 +1,19 @@
+title: IIS Brute Force
+description: "Microsoft Exchange error code 302 shows field logs. \nError code 302
+  means incorrect input."
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  category: MSWindows:2012:IIS
+detection:
+  condition: selection | count(srcip) by srcip > 10
+  selection:
+    sc_status: 302
+fields:
+- srcip
+- user
+- user_agent
+falsepositives:
+- You can log in incorrectly
+level: medium
