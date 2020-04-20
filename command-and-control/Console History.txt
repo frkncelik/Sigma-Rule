@@ -1,0 +1,29 @@
+title: Console History
+description: Console History
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 1
+    - 4688
+    Image:
+    - '"*Get-History*" '
+    - '"*AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt*"'
+    - '"*(Get-PSReadlineOption).HistorySavePath*"'
+    initiated: "true"
+    ServiceName:
+    - '*powershell.exe*'
+    - '*cmd.exe*'
+fields:
+- user
+- computer
+- process_path
+- process_parent_command_line
+falsepositives:
+- unknown
+level: medium
