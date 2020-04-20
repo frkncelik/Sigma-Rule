@@ -1,0 +1,31 @@
+title: Endpoint .bash profile and .bashrc Detection
+description: bash profile and bashrc are executed in a users context when a new shell
+  opens or when a user logs in so that their environment is set correctly. bash profile
+  is executed for login shells and bashrc is executed for interactive non-login shells.
+  This means that when a user logs in (via username and password) to the console (either
+  locally or remotely via something like SSH), bash_profile is executed before the
+  initial command prompt is returned to the user. After that, every time a new shell
+  is opened, bashrc is executed. This allows users more fine grained control over
+  when they want certain commands executed.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1156
+date: 2020/02/28
+logsource:
+  product: linux
+detection:
+  condition: keyword
+  keyword:
+  - nano .bashrc
+  - vi .bashrc
+  - echo .bashrc
+  - nano .bashrc_profile
+  - vi .bashrc_profile
+  - echo .bashrc_profile
+fields:
+- host
+falsepositives:
+- unknown
+level: medium
