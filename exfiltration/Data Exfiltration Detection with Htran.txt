@@ -1,0 +1,29 @@
+title: Data Exfiltration Detection with Htran
+description: Similar to most of cyber espionage groups, APT10 is main goal is to exfiltrate critical data from victim is environment. In order to exfiltrate data from the victim is network segment that is not connected to internet, a bridge tool is needed to redirect ports and connections between two network segments. In this case threat group deployed hTran to achieve the same functionality. Over the past years we observed Chinese threata groups using htran in their attacks against world. This executable file was seen as java.exe on compromised hosts
+author: Furkan Celik
+status: stable
+date: 2020/04/12
+reference:
+- https://github.com/HiwinCN/HTran/blob/master/README.md
+- https://www.secureworks.com/research/htran
+tags:
+- attack.T1041
+- attack.Exfiltration
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*java.exe %% 1936 0x199c *java.exe -ht listenip:8080 -hu username -hp password C&C:443 NULL SID -- 0x0'
+    EventID:
+    - 1
+    Image:
+    - '*java.exe'
+fields:
+- process_creation
+- CommandLine
+falsepositives:
+- unknown
+level: high
