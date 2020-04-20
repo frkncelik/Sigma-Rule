@@ -1,0 +1,33 @@
+title: Powershell.exe Network Connections Detection
+description: With monitoring powershell network connections you can find abnormal and suspicious network connections. Depends on your envoriment this rule can generate falsepositives. Because some softwares like backup tools , can create network connections with powershell.exe . You should exclude the valid connections after that you can see the odd things.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1086
+- attack.Execution
+date: 2020/04/13
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection OR selection1 NOT filter
+  selection:
+    Image:
+    - powershell.exe
+    EventID:
+    - 22
+  selection1:
+    Image:
+    - powershell.exe
+    EventID:
+    - 3
+  filter:
+    DestinationIp:
+    - 10.*
+    - 127.0.0.1
+    - 192.168.*
+fields:
+- image
+- DestinationIp
+- QueryName
+level: high
