@@ -1,0 +1,31 @@
+title: Data Compressed Detect
+description: |-  An attacker could compress files to hijack internal data. Less traffic
+  appears in network traffic. Unobtrusive
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: security
+  category: process_creation
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4688
+    - 1
+    Image:
+    - '*powershell.exe*'
+    - '*rar*'
+    - '*7z*'
+    - '*zip*'
+    CommandLine:
+    - '*-Recurse | Compress-Archive*'
+    - '*rar*a*'
+fields:
+- user
+- computer
+- filename
+- commandline
+falsepositives:
+- Unknown
+level: medium
