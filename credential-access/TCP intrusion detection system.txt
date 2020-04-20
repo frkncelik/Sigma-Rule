@@ -1,0 +1,17 @@
+title: TCP intrusion detection system
+description: If more than 10 thousand tcp packets arrive from source ip address within
+  15 minutes, it shows source ip address, destination ip address and service
+author: Furkan Celik
+status: stable
+logsource:
+  product: firewall
+detection:
+  condition: 'selection | count(service) by srcip > 10000 '
+  selection:
+    service: tcp*
+  timeframe: 15m
+fields:
+- srcip
+- dstip
+- service
+level: high
