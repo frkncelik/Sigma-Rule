@@ -1,0 +1,22 @@
+title: FORTINET added admin rule to firewall
+description: Firewall shows the rules added by admin. This situation should be controlled.
+  The reason may be that the attacker has gotten the admin account.
+author: Furkan Celik
+status: stable
+logsource:
+  product: firewall
+  category: firewall
+detection:
+  condition: selection
+  selection:
+    object_path: system.admin
+    logdesc: object_attribute_configured
+fields:
+- time
+- user
+- object
+- device
+- vendor_action
+falsepositives:
+- This may be done by real admin
+level: medium
