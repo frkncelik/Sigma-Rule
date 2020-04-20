@@ -1,0 +1,25 @@
+title: RDP Brute Force Attack Detected
+description: 'These are trending attacks nowadays because we have been working remotely.
+  Lists brute-force attacks on your RDP login. '
+author: Furkan Celik
+status: stable
+- attack.execution
+- attack.T1110
+date: 2020/03/26
+logsource:
+  product: firewall
+detection:
+  condition: selection | count(dstip) by srcip > 5
+  selection:
+    action: blocked
+    destport: 3389
+    service: RDP
+  timeframe: 10m
+fields:
+- user
+- srcip
+- destip
+falsepositives:
+- unknown
+level: high
+tags:
