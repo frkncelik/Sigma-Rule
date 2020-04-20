@@ -1,0 +1,19 @@
+title: RID Hijacking
+description: Detects RID Hijacking
+author: Furkan Celik
+reference: https://pentestlab.blog/2020/02/12/
+status: experimental
+tags:
+- attack.t1098
+- attack.persistence
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 13
+    TargetObject: '*\SAM\SAM\Domains\Account\Users\000001F5'
+  condition: selection
+falsepositives:
+- unknown
+level: medium
