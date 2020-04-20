@@ -1,0 +1,22 @@
+title: Rundll32 Run HTML Application Detected
+description: The rundll32 application is designed to run code present in DLLs. There
+  is however a case where it can also be used in the same way as MSHTA to execute
+  JavaScript code on the command-line.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1085
+date: 2020/03/13
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - rundll32.exe javascript:\..\mshtml.dll,RunHTMLApplication ;document.write();GetObject*
+fields:
+- Account_Name
+- Computer_Name
+level: medium
