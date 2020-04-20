@@ -1,0 +1,34 @@
+title: SQL Agent Scheduled Tasks and Services Detection
+description: An attack targeting the aviation industry has been identified. You can detect the  list of this Scheduled Tasks and Services attack by installing backdoor on SQL servers on your system.
+author: Furkan Celik
+date: 2020/04/02
+Reference:
+- https://github.com/guardicore/labs_campaigns/blob/master/Vollgar/scheduled_tasks_services.md
+- https://thehackernews.com/2020/04/backdoor-.html
+tags:
+- attack.T1053
+- attack.execution
+- attack.persistence
+- attack.Privilege_Escalation
+status: stable
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    Task_Name:
+    - \.NET Framework NGEN v0.2.212294
+    - \.NET Framework NGEN v0.2.212294 64
+    - \.NET Framework NGEN v0.2.213394
+    - \.NET Framework NGEN v0.2.213394 64
+    - \.NET Framework NGEN v0.2.214294
+    - \.NET Framework NGEN v0.2.214294 64
+    - \.NET Framework NGEN v0.2.215394
+    - \.NET Framework NGEN v0.2.215394 64
+    EventID:
+    - 4698
+fields:
+- account_name
+- Account_Domain
+level: high
