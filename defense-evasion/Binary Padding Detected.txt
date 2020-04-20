@@ -1,0 +1,22 @@
+title: Binary Padding Detected
+description: Some security tools inspect files with static signatures to determine
+  if they are known malicious. Adversaries may add data to files to increase the size
+  beyond what security tools are capable of handling or to change the file hash to
+  avoid hash-based blacklists.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1009
+logsource:
+  product: linux
+detection:
+  condition: keywords
+  keywords:
+  - '*dd *'
+fields:
+- time
+- src
+falsepositives:
+- Red team activities
+level: medium
+date: 2020/02/02
