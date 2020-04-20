@@ -1,0 +1,35 @@
+title: Endpoint  File Permissions Modification Detection
+description: File permissions are commonly managed by discretionary access control
+  lists (DACLs) specified by the file owner. File DACL implementation may vary by
+  platform, but generally explicitly designate which users/groups can perform which
+  actions. Adversaries may modify file permissions/attributes to evade intended DACLs.  Modifications
+  may include changing specific access rights, which may require taking ownership
+  of a file and/or elevated permissions such as Administrator/root depending on the
+  file's existing permissions to enable malicious activity such as modifying, replacing,
+  or deleting specific files. Specific file modifications may be a required step for
+  many techniques, such as establishing Persistence via Accessibility Features, Logon
+  Scripts, or tainting/hijacking other instrumental binary/configuration files.
+author: Furkan Celik
+status: stable
+- attack.execution
+- attack.T1222
+date: 2020/02/28
+logsource:
+  product: linux
+detection:
+  condition: keyword and not keyword1
+  keyword:
+  - chmod *
+  - chown *
+  keyword1:
+  - '*HCP-MIB*'
+  - '*VMWARE-*'
+  - '*DELL-RAC-MIB*'
+  - '*WMWARE-VROPS-MIB*'
+  - '*ORACLE-ENTERPRISE-MANAGER*'
+fields:
+- host
+falsepositives:
+- unknown
+level: medium
+tags:
