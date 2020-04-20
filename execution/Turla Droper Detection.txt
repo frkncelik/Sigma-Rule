@@ -1,0 +1,42 @@
+title: Turla Droper Detection
+description: This method detects malicious services mentioned in Turla PNG dropper
+  report by NCC Group in November 2018.The dropper family, referred to internally
+  as PNG_dropper, was observed being used as a second stage tool in different targeted
+  attacks. One of final payloads that is created by this dropper is an Uroburos variant
+  used by the Turla group, which traditionally operates out of Russia. This technique
+  is being used to allow the attackers to conceal their secondary payloads, bypassing
+  different AV products. Attackers, regardless of their skills and motives, often
+  attempt to wrap malicious code in a way that will seem innocuous to practitioners
+  and security products.
+author: Furkan Celik
+status: stable
+date: 2020/03/28
+Reference:
+- https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2018/november/turla-png-dropper-is-back/
+- https://www.carbonblack.com/2017/08/07/threat-analysis-carbon-black-threat-research-dissects-png-dropper/
+tags:
+- attack.t1059
+- attack.execution
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection or selection1
+  selection:
+    EventID:
+    - 1
+    Hash:
+    - 6ed939f59476fd31dc4d99e96136e928fbd88aec0d9c59846092c0e93a3c0e27
+    - fea27eb2e939e930c8617dcf64366d1649988f30555f6ee9cd09fe54e4bc22b3
+    - eca66eed6966ed237252630bf353336bbb6789daa5764afba45e43108c7cd536
+    CommandLine:
+    - '*kernel32.dll'
+  selection1:
+    EventID:
+    - 7045
+    ServiceName:
+    - WerFaultSvc
+fields:
+- Account_Name
+- Process_Name
+level: critical
