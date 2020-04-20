@@ -1,0 +1,24 @@
+title: Ryuk Ransomware Persistence mechanism Detection
+description: Ryuk adds the following registry key so it will execute at every login.
+  It uses the command below to create a registry key
+author: Furkan Celik
+status: stable
+Reference:
+- https://www.zscaler.com/blogs/research/examining-ryuk-ransomware
+date: 2020/03/30
+tags:
+- attack.persistence
+- attack.T1183
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - C:\Windows\System32\cmd.exe" /C REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+    - /v "svchos" /t REG_SZ /d "C:\Users\Public\*.exe" /f
+fields:
+- computer
+- CommandLine
+level: high
