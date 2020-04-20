@@ -1,0 +1,16 @@
+title: Port Scan
+description: Shows port scans
+author: Furkan Celik
+status: stable
+logsource:
+  product: firewall
+detection:
+  condition: selection | count(dstip) by srcip > 500
+  selection:
+    action: '*'
+  timeframe: 60m
+fields:
+- time
+- srcip
+- dstip
+level: medium
