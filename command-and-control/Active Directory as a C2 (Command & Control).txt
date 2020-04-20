@@ -1,0 +1,24 @@
+title: Active Directory as a C2 (Command & Control)
+description: |-  Active Directory is a Central Authentication and Access control. It is
+  important to control it. The service name does not appear either. The important
+  thing is to check the displayname
+author: Furkan Celik
+status: stable
+reference:
+- https://akijosberryblog.wordpress.com/2018/03/17/active-directory-as-a-c2-command-control/
+date: 2020/02/03
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 5136
+fields:
+- computer
+- attribute
+- displayname
+falsepositives:
+- unknown
+level: critical
