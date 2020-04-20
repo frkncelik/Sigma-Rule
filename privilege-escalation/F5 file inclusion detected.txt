@@ -1,0 +1,22 @@
+title: F5 file inclusion detected
+description: F5(WAF) file inclusion detected
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1100
+logsource:
+  product: F5
+detection:
+  condition: selection
+  selection:
+    Path:
+    - '*/etc/passwd*'
+    - '*shadow*'
+    - '*tmp*'
+    - '*crontab*'
+fields:
+- time
+- client_addr
+- path
+- query
+level: high
