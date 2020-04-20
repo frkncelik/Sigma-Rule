@@ -5,6 +5,13 @@ description: Spraykatz is a tool without any pretention able to retrieve credent
   software as much as possible
 author: Furkan Celik
 status: stable
+date: 2020/03/30
+Reference:
+- https://github.com/aas-n/spraykatz
+- https://kalilinuxtutorials.com/spraykatz-credentials-gathering-tool/
+tags:
+- attack.T1174
+- attack.Credential_Access
 logsource:
   product: windows
   service: security
@@ -30,10 +37,3 @@ fields:
 - Account_Name
 - Process_Name
 level: high
-date: 2020/03/30
-Reference:
-- https://github.com/aas-n/spraykatz
-- https://kalilinuxtutorials.com/spraykatz-credentials-gathering-tool/
-tags:
-- attack.T1174
-- attack.Credential_Access
