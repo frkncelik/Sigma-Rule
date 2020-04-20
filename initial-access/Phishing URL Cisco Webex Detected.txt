@@ -1,0 +1,25 @@
+title: Phishing URL Cisco Webex Detected
+status: stable
+date: 2020/04/11
+tag:
+- attack.Initial_Access
+- attack.T1192
+reference:
+- https://www.threathunting.se/2020/04/10/ongoing-phishing-campaign-steals-cisco-webex-users-credentials/
+description: The phishing emails come from a spoofed sender address "meetings[@]webex[.]com" with various striking subject lines such as "Critical Update" or "Alert!". The email explains that a critical vulnerability could allow an unauthenticated user to install a "Docker container with high privileges on the system," and users must immediately update their Cisco Webex application. The email even contains a legitimate URL to a real security advisory published by Cisco back in 2016. The advisory contains details about a vulnerability tracked as "CVE-2016-9223" which is also the URL anchor text. The email then urges users to update their Desktop app and leads them to a "Join" button. The URL embedded into the text "Join", looks quite similar to a legitimate Cisco Webex URL.
+author: Furkan Celik
+logsource:
+  category: proxy
+detection:
+  condition: selection
+  selection:
+    action: allowed
+    cs-uri-query:
+    - https://globalpagee-prod-webex.com/Signin
+fields:
+- url
+- action
+- user
+falsepositives:
+- unknown
+level: medium
