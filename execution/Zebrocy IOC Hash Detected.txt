@@ -1,0 +1,31 @@
+title: Zebrocy IOC Hash Detected
+description: Zebrocy is a Russian APT that shares similarities and overlaps with both
+  the Sofacy and BlackEnergy APTs.Recently Zebrocy spearphished a fairly long list
+  of targets throughout the world with a new Nim downloader, according to Kaspersky
+  Lab researchers. This rule can detect Zebrocy based on its behavior and some IOC
+  containing hash, IP and URLs with Splunk query..
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1490
+date: 2020/03/18
+reference:
+- https://www.threathunting.se/2020/02/26/get-your-shield-against-zebrocy-attack/
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    Hashes:
+    - 1fe6af243760ca287f80eafbb98ba1b0
+    - 7e67122d3a052e4755b02965e2e56a2e
+    - a13c864980159cd9bdc94074b2389dda
+    - f4cab3a393462a57639faa978a75d10a
+    EventID:
+    - 1
+fields:
+- Account_Name
+- Computer_Name
+level: medium
