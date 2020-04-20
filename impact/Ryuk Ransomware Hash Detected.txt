@@ -1,0 +1,29 @@
+title: Ryuk Ransomware Hash Detected
+description: While most ransomware is spread using spam email and exploit kits, Ryuk
+  is delivered as a payload of the Emotet and Trickbot malware. Looking at the encryption
+  process and ransom demands, Ryuk is targeting big enterprises in the hopes of large
+  payoffs.
+author: Furkan Celik
+status: stable
+tags:
+- attack.impact
+- attack.T1486
+date: 2020/03/28
+reference:
+- https://www.zscaler.com/blogs/research/examining-ryuk-ransomware
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    Hashes:
+    - 5AC0F050F93F86E69026FAEA1FBB4450
+    - 6CDCB9F86972EFC4CFCE4B06B6BE053A
+    - 31BD0F224E7E74EEE2847F43AAE23974
+    EventID:
+    - 1
+fields:
+- Account_Name
+- Computer_Name
+level: medium
