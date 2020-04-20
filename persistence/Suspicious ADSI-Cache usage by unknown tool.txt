@@ -1,0 +1,31 @@
+title: Suspicious ADSI-Cache usage by unknown tool
+description: Detects the usage of ADSI operation by tools. This may also detect tools
+  like LDAPFragger
+author: Furkan Celik
+status: stable
+tags:
+- attack.persistence
+- attack.T1041
+date: 2020/03/27
+reference:
+- https://blog.fox-it.com/2020/03/19/ldapfragger-command-and-control-over-ldap-attributes/
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection AND NOT selection1
+  selection:
+    EventID:
+    - 11
+    TargetFileName:
+    - '*\Local\Microsoft\Windows\SchCache\*.sch'
+  selection1:
+    TargetFileName:
+    - C:\Windows\system32\svchost.exe
+    - C:\Windows\system32\DllHost.exe
+    - C:\Windows\system32\mmc.exe
+fields:
+- user
+- Attribute_Ldap_Display_Name
+- Value
+level: high
