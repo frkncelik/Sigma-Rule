@@ -1,0 +1,27 @@
+title: WMI Process Cores Detected
+description: "The WMI command tool (wmic.exe) is an interface to the Windows Management Instrumentation. It allows display and modification of local and remote computers, setting system variables and executing scripts. This instance is checking for the number of logical processors, and cores of the current machine. This is a common malware sandbox enumeration technique as sandboxes typically will only have a small number of processors and cores. If a small number is detected, the malware making the WMIC call will alter its behavior or exit without producing further malicious activity."
+author: Furkan Celik
+status: stable
+tags:
+- attack.Execution
+- attack.defense_evasion
+- attack.t1204
+- attack.t1059
+date: 2020/02/18
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - wmic cpu
+    - get NumberofCores
+    - MaxClockSpeed
+    - 'get NumberofCores,MaxClockSpeed,Name '
+    - /format:list
+fields:
+- computer
+falsepositives:
+- unknown
+level: medium
