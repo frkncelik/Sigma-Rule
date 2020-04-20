@@ -1,0 +1,18 @@
+title: Source ip abnormal traffic
+description: Indicates abnormal traffic blocked from inside to outside.
+author: Furkan Celik
+status: stable
+logsource:
+  product: firewall
+  category: firewall
+detection:
+  condition: selection | count(srcip) by srcip > 500
+  selection:
+    action: blocked
+    srcip: 10.*,172.*,192.*
+  timeframe: 15m
+fields:
+- srcip
+level: medium
+falsepositives:
+- The destination ip address you have blocked can be the IP address.
