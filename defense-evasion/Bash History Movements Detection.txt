@@ -1,0 +1,27 @@
+title: Bash History Movements Detection
+description: Bash keeps track of the commands users type on the command-line with
+  the "history" utility. Once a user logs out, the history is flushed to the user’s
+  .bash_history file. macOS and Linux both keep track of the commands users type in
+  their terminal so that users can easily remember what they''ve done. These logs
+  can be accessed in a few different ways. While logged in, this command history is
+  tracked in a file pointed to by the environment variable HISTFILE. When a user logs
+  off a system, this information is flushed to a file in the user''s home directory
+  called ~/.bash_history.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1139
+- attack.T1146
+date: 2020/02/18
+logsource:
+  product: linux
+detection:
+  condition: keyword
+  keyword:
+  - cat bash_history
+  - rm * .bash_history
+fields:
+- host
+falsepositives:
+- unknown
+level: medium
