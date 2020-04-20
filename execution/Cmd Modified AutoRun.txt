@@ -1,0 +1,28 @@
+title: Cmd Modified AutoRun Detected
+description: RunOnce registry key can be used to run programs each time the new user
+  logs on. RunOnce key will be deleted after the specified command was executed. Malware
+  often misuses this key to make sure that it will be running on the system after
+  the reboot.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1060
+date: 2020/03/13
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - ' reg add HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run /t
+      REG_EXPAND_SZ /v PHIME2010ASYNC /d  *'
+    ServiceName:
+    - reg.exe
+    EventID:
+    - 4688
+fields:
+- Account_Name
+- Computer_Name
+level: medium
