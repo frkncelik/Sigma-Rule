@@ -1,0 +1,40 @@
+title: Malware Script and exe detection for SQL Attack
+description: An attack targeting the aviation industry has been detected. You candetect this by looking at the list of malicious scripts and files.
+author: Furkan Celik
+status: stable
+date: 2020/04/02
+Reference:
+- https://github.com/guardicore/labs_campaigns/blob/master/Vollgar/files.md
+- https://thehackernews.com/2020/04/backdoor-.html
+tags:
+- attack.T1064
+- attack.execution
+- attack.Defense_Evasion
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  condition: selection
+  selection:
+    Image|endswith:
+    - '*SQLAGENTIDC.exe'
+    - '*SQLAGENTVDC.exe'
+    - '*SQLAGENTSWA.exe'
+    - '*SQLIOMDSA.exe'
+    - '*SQLamd.exe'
+    - '*SQLIOMDSD.exe'
+    - '*SQLSernsf.exe'
+    - '*SQLSerasi.exe'
+    - '*sqlagentc.exe'
+    - '*startas.bat'
+    - '*startae.bat'
+    - '*vbs.tmp'
+    - '*wget.vbs'
+    - '*emsda.vbs'
+    - '*usdta.vbs'
+    EventID:
+    - 4688
+fields:
+- account_name
+- computer
+level: high
