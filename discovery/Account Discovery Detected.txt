@@ -1,0 +1,28 @@
+title: Account Discovery Detected
+description: |- Adversaries may attempt to get a listing of local system or domain accounts.
+  Linux On Linux, local users can be enumerated through the use of the /etc/passwd
+  file which is world readable. In mac, this same file is only used in single-user
+  mode in addition to the /etc/master.passwd file. Also, groups can be enumerated
+  through the groups and id commands.
+author: Furkan Celik
+status: stable
+tags:
+- attack.t1087
+date: 2020/02/03
+logsource:
+  product: linux
+detection:
+  condition: keyword
+  keyword:
+  - cat /etc/passwd
+  - cat /etc/sudoers
+  - lsof -u *
+  - lastlog
+  - group
+  - id
+fields:
+- time
+- host
+falsepositives:
+- unknown
+level: medium
