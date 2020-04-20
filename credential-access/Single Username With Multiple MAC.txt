@@ -1,0 +1,24 @@
+title: Single Username With Multiple MAC
+description: Indicates if a user has more than one MAC address.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1016
+date: 2020/02/03
+logsource:
+  product: firewall
+  description: |-
+    Cisco ISE product controls wifi connections. Of these, we can track
+    mac addresses, users and source ip addresses.  Type your local ip address Framed
+    IP Address. I wrote it as a 10th * representation.
+detection:
+  condition: selection | count(MacAddress) by user > 10
+  selection:
+    source: cisco:ise
+    Framed_IP_Address: 10.*
+fields:
+- MacAddress
+- User
+falsepositives:
+- unknown
+level: low
