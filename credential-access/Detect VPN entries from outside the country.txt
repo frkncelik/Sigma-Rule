@@ -1,0 +1,27 @@
+title: Detect VPN entries from outside the country
+description: Shows vpn connections from outside your country. You can type the country
+  you want. Change the VPN ip address and destination port
+author: Furkan Celik
+status: stable
+logsource:
+  product: firewall
+  category: firewall
+  description: |-
+    dstip= VPN ip adress
+    dstport= VPN dstport
+    srcip= Local ip adress
+    srccountry=your country
+detection:
+  condition: selection and not filter
+  selection:
+    dstip: 1.1.1.1
+    dstport: 443
+  filter:
+    srcip: 10.*
+    srccountry: Turkey
+fields:
+- time
+- srccountry
+- srcip
+- dstip
+level: medium
