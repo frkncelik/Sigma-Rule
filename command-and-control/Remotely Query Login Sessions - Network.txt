@@ -1,0 +1,23 @@
+title: Remotely Query Login Sessions - Network
+description: Remotely Query Login Sessions - Network
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 3
+    Image:
+    - '*qwinsta.exe*'
+    - '*powershell.exe*'
+    - '*cmd.exe*'
+fields:
+- computer
+- process_path
+- process_parent_command_line
+falsepositives:
+- unknown
+level: medium
