@@ -1,0 +1,20 @@
+title: New trust was created to a domain
+description: Setting up a new domain in the domain structure is inconvenient.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1520
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4706
+fields:
+- AccountName
+- AccountDomain
+falsepositives:
+- Made by admin
+level: medium
