@@ -1,0 +1,25 @@
+title: Security-enabled/disable global and local group was deleted
+description: Deleted the Security Global group identified in Deleted Group. Deleted
+  the Security Local group identified in Deleted Group.
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: 'selection OR selection1 '
+  selection:
+    EventID:
+    - 4730
+    - 4734
+  selection1:
+    EventID:
+    - 4748
+    - 4753
+fields:
+- Group_Name
+- host_name
+- message
+falsepositives:
+- You can do this yourself
+level: medium
