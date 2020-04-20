@@ -1,0 +1,21 @@
+title: Out of Country (Suspicious) Mail Traffic
+description: Lists Out of Country (Suspicious) mail traffic. You should watch it.
+  The reason is determined if the mail account is seized by attackers and used outside
+  the country. You can change srccountry according to your country.
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: msexchange
+detection:
+  condition: not filter
+  filter:
+    srccountry: Turkey
+    srcip: 10.*
+fields:
+- srccountry
+- srcip
+- username
+falsepositives:
+- The user really logs into the mail account outside the country.
+level: medium
