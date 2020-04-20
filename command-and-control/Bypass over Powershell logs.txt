@@ -1,0 +1,30 @@
+title: Bypass over Powershell logs
+description: Displays bypass operations via Powershell logs. Lists script block texts
+author: Furkan Celik
+status: stable
+reference:
+- https://www.myeventlog.com/search/show/980
+- https://nsfocusglobal.com/Attack-and-Defense-Around-PowerShell-Event-Logging
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4104
+    CommandLine:
+    - '*/powershell/i* '
+    - '*/bypass/i*'
+    - '*/-ep/i*'
+    - '*/-exec/i*'
+    - '*/-nop/i*'
+    - '*/hidden/i*'
+fields:
+- user
+- computer_name
+- ScriptBlockText
+- ScriptBlockId
+falsepositives:
+- '-'
+level: critical
