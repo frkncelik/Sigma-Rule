@@ -1,0 +1,37 @@
+title: Specific Commands Executed by PXJ RANSOMWARE
+Reference: https://www.threathunting.se/2020/03/17/x-force-iris-warns-pxj-ransomware-strain/
+description: Similar to other ransomware, "PXJ", also known as "XVFXGW", starts attacking
+  by disabling users’ access to any file from deleted stores; first, the Recycle Bin
+  is emptied with the "SHEmptyRecycleBinW" command. Then a series of commands are
+  executed to prevent the recovery of data after encryption. This step contains the
+  deletion of volume shadow copies and the disabling of the Windows Error Recovery
+  Service. After that, "PXJ" uses both AES and RSA to lock down data as fast as possible
+  and in the last step, the ransomware drops a file named "LOOK.txt" that contains
+  the ransomware note in which the operators demand victims to contact them via email
+  and pay the ransom with Bitcoin in the exchange for the decryption key.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1490
+date: 2020/03/28
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4688
+    CommandLine:
+    - vssadmin.exe delete shadows /all /quiet
+    - bcdedit.exe /set {default} recoveryenabled no
+    - bcdedit.exe /set {default} bootstatuspolicy ignoreallfailures
+    - bcdedit.exe /set {current} recoveryenabled no
+    - bcdedit.exe /set {current} bootstatuspolicy ignoreallfailures
+    ServiceFileName: '*powershell.exe'
+fields:
+- Account_Name
+- Computer_Name
+- Process_Name
+level: critical
