@@ -1,0 +1,16 @@
+title: Suspicious Arbor Traffic
+description: Shows suspicious Arbor Traffic
+author: Furkan Celik
+status: stable
+logsource:
+  product: arbor
+detection:
+  condition: selection | count(Blocked_host) by src_ip > 1000
+  selection:
+    action: Blocked_host
+  timeframe: 5m
+fields:
+- src_ip
+falsepositives:
+- Unknow
+level: high
