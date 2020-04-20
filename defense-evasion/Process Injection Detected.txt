@@ -1,0 +1,23 @@
+title: Process Injection Detected
+description: Process injection is a method of executing arbitrary code in the address
+  space of a separate live process. Running code in the context of another process
+  may allow access to the process's memory, system/network resources, and possibly
+  elevated privileges. Execution via process injection may also evade detection from
+  security products since the execution is masked under a legitimate process.
+author: Furkan Celik
+status: stable
+date: 2020/02/02
+Tags:
+- attack.T1055
+logsource:
+  product: linux
+detection:
+  condition: keywords
+  keywords:
+  - '"*ld.so.preload*"'
+fields:
+- time
+- src
+falsepositives:
+- Unknown
+level: medium
