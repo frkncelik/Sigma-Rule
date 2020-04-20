@@ -1,0 +1,19 @@
+title: Computer account was created
+description: ' Created the computer identified by New Computer Account.'
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: 'selection '
+  selection:
+    EventID:
+    - 4741
+fields:
+- user
+- user_sid
+- message
+falsepositives:
+- You can do this yourself
+level: medium
