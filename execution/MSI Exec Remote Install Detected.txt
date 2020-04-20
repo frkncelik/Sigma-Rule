@@ -1,0 +1,21 @@
+title: MSI Exec Remote Install Detected
+description: The Windows Installer (msiexec.exe) is used to install, update, or remove packages in the MSI format. In this case, the /i command line argument to msiexec.exe has been used to install a remote package. In addition, the /q command line argument has been used to perform a silent install. A remote package being installed silently in this way is suspicious.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1218
+date: 2020/03/13
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - msiexec.exe /i *
+    - msiexec.exe /q *
+fields:
+- Account_Name
+- Computer_Name
+level: medium
