@@ -1,0 +1,25 @@
+title: File System Permissions Weakness
+description: File System Permissions Detects Weakness.
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: 'selection and not filter '
+  selection:
+    EventID:
+    - 7
+    Image:
+    - '*\Temp\*'
+    - '*\Users\*'
+  filter:
+    DriverSignatureStatus: valid
+fields:
+- time
+- computer
+- process_path
+- driver_loaded
+falsepositives:
+- unknown
+level: medium
