@@ -1,0 +1,17 @@
+title: UDP Flood Attacks
+description: If more than 10 thousand udp packets arrive from source ip address within
+  15 minutes, it shows source ip address, destination ip address and service
+author: Furkan Celik
+status: stable
+logsource:
+  product: firewall
+detection:
+  condition: 'selection | count(service) by srcip > 10000 '
+  selection:
+    service: udp*
+  timeframe: 15m
+fields:
+- srcip
+- dstip
+- service
+level: high
