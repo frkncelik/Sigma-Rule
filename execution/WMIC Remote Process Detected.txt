@@ -1,0 +1,28 @@
+title: WMIC Remote Process Detected
+description: The WMI command tool (wmic.exe) is an interface to the Windows Management
+  Instrumentation. It allows display and modification of local and remote computers,
+  setting system variables and executing scripts. In this instance, wmic.exe was used
+  to execute a command on a remote computer. Malware may use this for lateral movement.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1047
+date: 2020/03/13
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - cmd.exe /c wmic /node:%REMOTEIP% /user:%REMOTEDOMAIN%\%REMOTEUSERNAME% /password:%REMOTEPASSWORD%
+      process call create ipconfig.exe
+    ServiceName:
+    - cmd.exe
+    EventID:
+    - 4688
+fields:
+- Account_Name
+- Computer_Name
+level: medium
