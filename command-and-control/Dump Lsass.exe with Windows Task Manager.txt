@@ -1,0 +1,23 @@
+title: Dump Lsass.exe with Windows Task Manager
+description: With the Windows Task Manager, the lsass.exe dump is retrieved and the
+  user's credentials are displayed by using 3rd party software.
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 11
+    file_name: '*lsass.exe*'
+    Image:
+    - '*/Temp/*'
+fields:
+- computer_name
+- Image
+- file_name
+falsepositives:
+- 
+level: critical
