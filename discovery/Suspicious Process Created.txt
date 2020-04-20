@@ -1,0 +1,25 @@
+title: Suspicious Process Created
+description: Shows suspicious processes
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1057
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection  and not filter | count(process_command_line) by host > 1
+  selection:
+    EventID:
+    - 4688
+    ServiceFileName: '*.exe'
+  filter:
+    Account_Name: '*$*'
+    ServiceFileName: '*cmd.exe*'
+fields:
+- host
+- login_account
+- process
+- Creator_process_name
+- process_command_line
+level: medium
