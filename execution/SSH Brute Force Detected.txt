@@ -1,0 +1,24 @@
+title: SSH Brute Force Detected
+description: Detects ssh brute force attack
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1110
+date: 2020/03/25
+logsource:
+  product: linux
+  service: sshd
+detection:
+  condition: keyword | count(dstip) by srcip > 10
+  keyword:
+  - action: failure
+    command: /usr/sbin/sshd
+  timeframe: 60m
+fields:
+- user
+- srcip
+- dstip
+falsepositives:
+- unknown
+level: high
