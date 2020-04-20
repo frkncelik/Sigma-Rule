@@ -1,0 +1,28 @@
+title: Suspicious LDAP-Attributes used (possible data-exchange via LDAP)
+description: Detects the usage of particular AttributeLDAPDisplayNames, which are
+  known for data exchange via LDAP. This may also detect tools like LDAPFragger.
+author: Furkan Celik
+status: stable
+tags:
+- attack.persistence
+- attack.T1041
+date: 2020/03/27
+reference:
+- https://blog.fox-it.com/2020/03/19/ldapfragger-command-and-control-over-ldap-attributes/
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 5136
+    Attribute_Ldap_Display_Name:
+    - primaryInternationalISDNNumber
+    - otherFacsimileTelephoneNumber
+    - primaryTelexNumber
+fields:
+- user
+- Attribute_Ldap_Display_Name
+- Value
+level: high
