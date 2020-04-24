@@ -1,0 +1,28 @@
+title: Powershell DLL Attacks Detection
+description: Powershell does not equal powershell.exe. Adversaries may use powershell dlls to perform their malicious powershell activities. ou can detect and monitor binaries that use Powershell dlls.
+author: Furkan Celik
+status: stable
+date: 2020/04/24
+reference:
+- https://blog.rapid7.com/2018/09/27/the-powershell-boogeyman-how-to-defend-against-malicious-powershell-attacks/
+tags:
+- attack.execution
+- attack.T1086
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 7
+    ImageLoaded:
+    - '*\system.reflection.dll'
+    - '*\system.managment.automation.ni.dll'
+    - '*\system.managment.automation.dll'
+fields:
+- Image
+- User
+- Computer
+- ImageLoaded
+level: high
