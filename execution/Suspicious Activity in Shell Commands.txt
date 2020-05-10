@@ -1,0 +1,62 @@
+title: Suspicious Activity in Shell Commands
+description: Detects suspicious shell commands in linux with sigma rule
+author: Furkan Celik
+status: stable
+reference:
+- http://www.threatgeek.com/2017/03/widespread-exploitation-attempts-using-cve-2017-5638.html
+- https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/multi/http/struts_code_exec_exception_delegator.rb#L121
+- https://github.com/mubix/post-exploitation/wiki/Linux-Post-Exploitation-Command-List
+date: 2020/05/05
+tags:
+- attack.execution
+- attack.T1059
+logsource:
+  product: linux
+detection:
+  condition: keyword
+  keyword:
+  - /etc/security/passwd
+  - getent passwd
+  - find /etc -name aliases
+  - grep ^mysql /home/*/.hist
+  - cat /home/*/.viminfo
+  - wget * – http* | perl
+  - '*;chmod +x /tmp/*'
+  - cp /bin/sh *
+  - '*/tmp/x *'
+  - '*/tmp/ysocereal.jar*'
+  - '* /tmp/*.b64 *'
+  - cp /bin/ksh *
+  - nc -l -p *
+  - '* /tmp/ns_sploit*'
+  - '* /tmp/haxhax*'
+  - '*chmod u+s /tmp/*'
+  - '*chmod +s /tmp/*'
+  - wget * – http* | sh
+  - wget * – http* | bash
+  - python -m SimpleHTTPServer
+  - -m http.server
+  - find /etc/sysconfig/ -type f -exec cat {} ;
+  - dpkg -l | grep -i "linux-image
+  - find /var ! -user root -type d -ls
+  - nc -e /bin/sh
+  - import pty; pty.spawn*
+  - socat exec:*
+  - socat -O /tmp/*
+  - socat tcp-connect*
+  - '*echo binary >>*'
+  - '*wget *; chmod +x*'
+  - '*wget *; chmod 777 *'
+  - '*cd /tmp || cd /var/run || cd /mnt*'
+  - '*stop;service iptables stop;*'
+  - '*stop;SuSEfirewall2 stop;*'
+  - chmod 777 2020*
+  - '*>>/etc/rc.local'
+  - '*base64 -d /tmp/*'
+  - '* | base64 -d *'
+  - '*/chmod u+s *'
+fields:
+- keyword
+falsepositives:
+- This rule can has very fp for better use you must know your hardening and tune the rule.
+level: high
