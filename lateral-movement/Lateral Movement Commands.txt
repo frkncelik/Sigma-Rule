@@ -1,0 +1,27 @@
+title: Lateral Movement Commands
+description: After sweeping the internal network for valid logon credentials, threat group began to move laterally. They were able to compromise critical servers and obtain Domain Admin access. Threat group used clear-text passwords, NTLM hashes and Kerberos tickets to move laterally.
+author: Furkan Celik
+status: stable
+tags:
+- "attack.persistence"
+- "attack.lateral_movement"
+- "attakc.T1037"
+date: 2020/05/05
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection
+  selection:
+    ProcessName:
+    - net.exe
+    - cmd.exe
+    - powershell.exe
+    CommandLine:
+    - net use \REDACTED\C$ /u:REDACTED \REDACTED
+    - powershell -exec bypass import-module .\Invoke-SMBClient.ps1;Invoke-SMBClient -Domain REDACTED -Username REDACTED -Hash REDACTED -Action
+    - powershell -exec bypass import-module .\Invoke-Sexe.ps1;Invoke-SMBExec -Target REDACTED -Domain REDACTED -Username REDACTED -Hash REDACTED -Action
+    - cmd.exe /c wmic node:REDACTED user:REDACTED password:REDACTED process call create cmd.exe /c
+fields:
+- CommandLine
+level: high
