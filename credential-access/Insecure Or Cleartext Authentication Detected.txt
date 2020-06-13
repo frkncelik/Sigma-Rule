@@ -1,0 +1,26 @@
+title: Insecure Or Cleartext Authentication Detected
+description: Device is accepting insecure or cleartext win remote authentication. Its settings need to be configured properly. Or secure protocols should be used.
+author: Furkan Celik
+status: stable
+date: 2020/06/10
+tags:
+- attack.Credential_Access
+- attack.T1003
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4624
+    LogonType: 8
+    ProcessName:
+    - \Windows\System32\inetsrv\w3wp.exe
+    - \Citrix\Broker\Service\BrokerService.exe
+    - \Program Files\Microsoft\Exchange Server\V15\ClientAccess\PopImap\Microsoft.Exchange.Pop3.exe
+    - \Program Files\Microsoft\Exchange Server\V15\ClientAccess\PopImap\Microsoft.Exchange.Imap4.exe
+fields:
+- ProcessName
+- AccountName
+level: medium
