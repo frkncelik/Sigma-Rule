@@ -1,0 +1,25 @@
+title: Detection of GalComm Malicious domains
+description: Awake security observed that almost 60% of domains registered with GalComm are malicious. They are used for serving malware or involved in surveillance activities. Those domains used various evasion techniques to stay undetected by most security solutions, the whole list is available from the reference link.
+author: Furkan Celik
+status: stable
+date: 2020/06/24
+tags:
+- attack.command_and_control
+- attack.T1483
+reference:
+- https://gbhackers-com.cdn.ampproject.org/c/s/gbhackers.com/chrome-browser-extensions/amp/
+- https://awakesecurity.com/wp-content/uploads/2020/06/GalComm-Registered-Domains-List-Appendix-A.txt
+logsource:
+  product: firewall
+detection:
+  condition: selection
+  selection:
+    url:
+    - frgmail.com
+    - ouringmals.org
+    - hostgatorreview.org
+    - binkiland.com
+fields:
+- action
+- url
+level: medium
