@@ -1,0 +1,29 @@
+title: Detection of Google Chrome malicious extensions
+description: All the harvested 111 malicious extensions use GalComm domains for C&C and they are aiming to take screenshots, read the clipboard, harvest credential tokens stored in cookies or parameters, grab user keystrokes and other surveillance activities. 2. The reference link I provided includes all malicious extensions.
+author: Furkan Celik
+status: stable
+date: 2020/06/22
+tags:
+- attack.persistence
+- attack.T1176
+reference:
+- https://gbhackers-com.cdn.ampproject.org/c/s/gbhackers.com/chrome-browser-extensions/amp/
+- https://awakesecurity.com/wp-content/uploads/2020/06/GalComm-Malicious-Chrome-Extensions-Appendix-B.txt
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection AND NOT filter
+  selection:
+    EventID:
+    - 15
+    TargetFileName:
+    - '*\Google\Chrome\User Data\Webstore\acmnokigkgihogfbeooklgemindnbine*'
+    - '*\Google\Chrome\User Data\Webstore\apgohnlmnmkblgfplgnlmkjcpocgfomp*'
+    - '*\Google\Chrome\User Data\Webstore\apjnadhmhgdobcdanndaphcpmnjbnfng*'
+    - '*\Google\Chrome\User Data\Webstore\bahkljhhdeciiaodlkppoonappfnheoi*'
+  filter:
+    TargetFileName: '*Zone.Identifier'
+fields:
+- TargetFileName
+level: medium
