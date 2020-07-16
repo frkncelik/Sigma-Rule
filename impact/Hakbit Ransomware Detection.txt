@@ -1,0 +1,34 @@
+title: Hakbit Ransomware Detection
+description: The string, once deobfuscated, returns a command string used to invoke PowerShell and to download a file named client.exe from hxxp://sevice[.]eu5[.]org which is then written into the user’s %TEMP% folder as newfile.exe. The PowerShell command is shown below.
+author: Furkan Celik
+status: stable
+date: 2020/07/08
+tags:
+- attack.Impact
+- attack.T1486
+- attack.execution
+- attack.T1059
+reference:
+- https://www.carbonblack.com/blog/tau-threat-analysis-hakbit-ransomware/
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection OR selection1
+  selection:
+    EventID:
+    - 3
+    Image:
+    - powershell.exe
+    DestinationIp:
+    - http://sevice.eu5.org/*
+  selection1:
+    EventID:
+    - 1
+    Hashes:
+    - d187292551fce9f4751a8fab00b9f33088c7a38b7454825e35390b524ba969bd
+    - ca8d10f5e5716b831e5c5bf97e0d3db14b03bea23f1b71c4dc04e68b675309c0
+fields:
+- Image
+- User
+level: high
