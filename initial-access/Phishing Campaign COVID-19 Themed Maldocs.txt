@@ -1,0 +1,31 @@
+title: Phishing Campaign COVID-19 Themed Maldocs
+description: Victims received an email with attached zip face mask order.zip which contained the aforementioned maldoc responsible to drop malware into the victim machine. The attack begins after opening face mask order.doc.  This RTF is weaponized with exploit which triggers CVE-2017-11882 vulnerability to execute arbitrary code.
+author: Furkan Celik
+status: stable
+reference:
+- https://www.seqrite.com/blog/gorgon-apt-targeting-msme-sector-in-india/
+date: 2020/08/18
+tags:
+- attack.T1204
+- attack.T1566
+- attack.Initial_Access
+- attack.execution
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    Image:
+    - cmd.exe
+    ParentImage:
+    - winword.exe
+    CommandLine:
+    - /c cscript %tmp%\ServerCrypted.vbs >> AC
+    - cmd /c sc query wcncsvc*
+    EventID:
+    - 1
+fields:
+- Image
+- CommandLine
+level: high
