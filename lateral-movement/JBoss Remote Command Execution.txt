@@ -1,0 +1,25 @@
+title: JBoss Remote Command Execution
+description: Detect attackers scanning for vulnerable JBoss servers
+author: Furkan Celik
+reference:
+- https://www.exploit-db.com/exploits/36575
+date: 2020/07/27
+tags:
+- attack.T1210
+- attack.lateral_movement
+status: stable
+logsource:
+  product: proxy
+detection:
+  condition: selection
+  selection:
+    cs-uri-query | endswith:
+    - jmx-console\*
+    - jmx-console\*
+    - web-console\ServerInfo.jsp\*
+  http_method: GET
+fields:
+- url
+- srcip
+- destip
+level: high
