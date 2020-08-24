@@ -1,0 +1,28 @@
+title: Lazarus Dropper/Trojan (Sysmon detection)
+description: This application is a 32-bit DLL. Upon execution, it decodes an embedded Ultimate Packer for Executables (UPX) packed DLL using a hard-coded XOR key '0x59'.  The decoded DLL is installed and executed from Comamnd Line
+author: Furkan Celik
+status: stable
+reference:
+- https://us-cert.cisa.gov/ncas/analysis-reports/ar20-232a
+date: 2020/08/24
+tags:
+- attack.T1204
+- attack.execution
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    Image:
+    - rundll32.exe
+    ParentImage:
+    - iconcache.db
+    CommandLine:
+    - C:\\Windows\\System32\rundll32.exe C:\\ProgramData\\iconcache.db,SMain S-6-12-2371-68143633-837395-7851
+    EventID:
+    - 1
+fields:
+- Image
+- CommandLine
+level: high
