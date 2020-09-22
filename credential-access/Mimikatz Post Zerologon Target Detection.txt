@@ -1,0 +1,33 @@
+title: Mimikatz Post Zerologon Target Detection
+description: We can say that "CVE-2020-1472" is the traces of the new vulnerability.
+author: Furkan Celik
+reference:
+- https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES/blob/master/Credential%20Access/remote_pwd_reset_rpc_mimikatz_postzerologon_target_DC.evtx
+date: 2020/09/18
+tags:
+- attack.T1021
+- attack.T1021.002
+- attack.lateral_movement
+- attack.credential_access
+status: stable
+logsource:
+  product: windows
+detection:
+  condition: selection AND selection1 AND selection2
+  selection:
+    EventID:
+    - 4624
+    LogonType: 3
+    AccountName: Administrator
+  selection1:
+    EventID:
+    - 5145
+    ShareName: \*\IPCS
+    AccountName: Administrator
+  selection2:
+    EventID:
+    - 4724
+    AccountName: Administrator
+fields:
+- AccountName
+level: high
