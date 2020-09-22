@@ -1,0 +1,23 @@
+title: DFIR System Netlogon Error Detection via (Eventid)
+description: It gives an error when there is no connection made. We can say that "CVE-2020-1472" is the traces of the new vulnerability.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1212
+- attack.Credential Access
+reference:
+- https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES/blob/master/Credential%20Access/Zerologon_CVE-2020-1472_DFIR_System_NetLogon_Error_EventID_5805.evtx
+date: 2020/09/18
+logsource:
+  product: windows
+  service: system
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 5805
+fields:
+- Computer
+falsepositives:
+- ""
+level: critical
