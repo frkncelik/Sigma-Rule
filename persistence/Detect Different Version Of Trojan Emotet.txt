@@ -1,0 +1,34 @@
+title: Detect Different Version Of Trojan Emotet
+description: Emotet is one of the most dangerous trojans to have been created. Over the course of its lifetime, it was upgraded to become a very destructive malware. It targets mostly corporate victims but even private users get infected in mass spam email campaigns.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1547
+- attack.T1547.001
+- attack.persistence
+reference:
+- https://app.any.run/tasks/873356b4-6aab-4f4e-979c-faa8a51db855/
+date: 2020/09/26
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection OR selection1
+  selection:
+    EventID:
+    - 3
+    Image|contains:
+    - \AppData\Local\mscdexnt\mshtmlmedia.exe
+    DestinationIp: 174.106.122.139
+  selection1:
+    EventID:
+    - 4657
+    ObjectName|contains:
+    - \HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+    Image|contains:
+    - \AppData\Local\mscdexnt\mshtmlmedia.exe
+fields:
+- ımage
+falsepositives:
+- ""
+level: critical
