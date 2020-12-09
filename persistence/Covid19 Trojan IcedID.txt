@@ -1,0 +1,23 @@
+title: Covid19 Trojan IcedID
+description: It sets up persistence by creating a Scheduled Task with the following characteristics.
+author: Furkan Celik
+reference:
+- https://malpedia.caad.fkie.fraunhofer.de/details/win.icedid
+date: 2020/09/15
+tags:
+- attack.T1053
+- attack.T1053.005
+- attack.persistence
+status: stable
+logsource:
+  product: windows
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4698
+    TaskName|endswith: '*\waroupada.exe '
+fields:
+- AccountName
+- TaskName
+level: high
