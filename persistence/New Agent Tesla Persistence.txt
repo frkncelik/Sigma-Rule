@@ -1,0 +1,39 @@
+title: New Agent Tesla Persistence(2020/07/16)
+description: Agent Tesla has not been seen to create a malicious copy of himself under the APPDATA directory and save the copy in the scheduler and in the registry under HKCU \ SOFTWARE \ Microsoft \ Windows \ CurrentVersion \ Run to maintain system persistence.
+author: Furkan Celik
+status: stable
+date: 2020/07/16
+tags:
+- attack.T1547
+- attack.T1547.001
+- attack.persistence
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection OR selection1 OR selection2
+  selection:
+    EventID:
+    - 13
+    Image|endswith:
+    - regSvcs.exe
+    TargetObject|contains:
+    - \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
+  selection1:
+    EventID:
+    - 13
+    Image|endswith:
+    - msbuild.exe
+    TargetObject|contains:
+    - \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
+  selection2:
+    EventID:
+    - 13
+    Image|endswith:
+    - regAsm.exe
+    TargetObject|contains:
+    - \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
+fields:
+- Computer
+- Image
+level: critical
