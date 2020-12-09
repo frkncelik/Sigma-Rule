@@ -1,0 +1,21 @@
+title: VMware Vcenter Remote Code Execution
+description: We found an Unauthenticated Arbitrary File Read vulnerability in VMware vCenter. VMware revealed that this vulnerability was patched in 6.5u1, but no CVE was assigned
+author: Furkan Celik
+status: stable
+date: 2020/07/16
+reference: https://twitter.com/ptswarm/status/1316016337550938122
+tags:
+- attack.T1190
+- attack.initial_access
+logsource:
+  product: proxy
+detection:
+  condition: selection
+  selection:
+    url|contains:
+    - /eam/vib?id=C:\ProgramData\VMware\vCenterServer\cfg\vmware-vpx\vcdb.properties
+    cs-method:
+    - GET
+fields:
+- url
+level: critical
