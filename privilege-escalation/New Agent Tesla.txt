@@ -1,0 +1,39 @@
+title: New Agent Tesla (2020/07/16)
+description: It is seen that the executable file in the compressed file terminates itself after a while and continues to run as a new process. As a result of the technical examinations, it has been determined that the Agent Tesla malware uses the Process Hollowing method to execute its malicious activities and creates known Windows processes such as RegAsm.exe, RegSvcs.exe and MSBuild.exe to hide itself and injects the malicious code into the new process where it creates the malicious code. .
+author: Furkan Celik
+status: stable
+date: 2020/07/16
+tags:
+- attack.T1055
+- attack.T1055.012
+- attack.Privilege_Escalation
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection OR selection1 OR selection2
+  selection:
+    EventID:
+    - 11
+    Image|endswith:
+    - regSvcs.exe
+    TargetFileName|contains:
+    - AppData\Roaming
+  selection1:
+    EventID:
+    - 11
+    Image|endswith:
+    - msbuild.exe
+    TargetFileName|contains:
+    - AppData\Roaming
+  selection2:
+    EventID:
+    - 11
+    Image|endswith:
+    - regAsm.exe
+    TargetFileName|contains:
+    - AppData\Roaming
+fields:
+- Computer
+- Image
+level: critical
