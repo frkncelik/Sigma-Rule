@@ -1,0 +1,30 @@
+title: Overwriting Accessibility Binaries Detection
+description: Microsoft Windows contains accessibility features that can be launched with a key combination before a user has logged in. An adversary can modify or replace these programs so they can get a command prompt or backdoor without logging in to the system. This search looks for modifications to these binaries.
+author: Furkan Celik
+reference:
+- https://www.carbonblack.com/blog/tau-threat-discovery-cryptocurrency-clipper-malware-evolves/
+date: 2020/08/28
+tags:
+- attack.T1546
+- attack.T1546.008
+- attack.Persistence
+status: stable
+logsource:
+  product: windows
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4663
+    ObjectName|endswith:
+    - \Windows\System32\sethc.exe
+    - \Windows\System32\utilman.exe
+    - \Windows\System32\osk.exe
+    - \Windows\System32\Magnify.exe
+    - \Windows\System32\Narrator.exe
+    - \Windows\System32\DisplaySwitch.exe
+    - \Windows\System32\AtBroker.exe
+fields:
+- account_name
+- Object_name
+level: high
