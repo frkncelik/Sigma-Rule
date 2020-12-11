@@ -1,0 +1,28 @@
+title: Registry Parse With pypykatz
+description: Parses registry hives to obtain stored credentials
+author: Furkan Celik
+tags:
+- attack.credential_access
+- attack.T1003
+date: 2020/12/07
+reference:
+- https://kalilinuxtutorials.com/pypykatz/
+- https://www.stevencampbell.info/Parsing-Creds-From-Lsass.exe-Dumps-Using-Pypykatz/
+status: stable
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - pypykatz
+    Image|endswith:
+    - /cmd.exe
+    - /python.exe
+    - /powershell.exe
+fields:
+- CommandLine
+falsepositives:
+- unknown
+level: critical
