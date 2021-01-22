@@ -1,0 +1,28 @@
+title: Cisco UCS Manager 2.2 Remote Command Execution Detection
+description: An unspecified CGI script in Cisco FX-OS before 1.1.2 on Firepower 9000 devices and Cisco Unified Computing System (UCS) Manager before 2.2(4b), 2.2(5) before 2.2(5a), and 3.0 before 3.0(2e) allows remote attackers to execute arbitrary shell commands via a crafted HTTP request, aka Bug ID CSCur90888.
+author: Furkan Celik
+status: stable
+date: 2020/01/19
+references:
+- https://www.exploit-db.com/exploits/49436
+- https://github.com/fuzzlove/Cisco-UCS-Manager-2.2-1d-Remote-Command-Execution
+tags:
+- attack.T1210
+- attack.lateral_movement
+level: critical
+logsource:
+  product: proxy
+detection:
+  condition: selection
+  selection:
+    c-uri|contains:
+    - '/ucsm/isSamInstalled.cgi'
+---
+logsource:
+  product: linux
+detection:
+  condition: selection
+  selection:
+    keyword:
+    - "cp /etc/ssl/openssl.cnf /etc/ssl/openssl.bak"
+    - "sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/' /etc/ssl/openssl.cnf"
