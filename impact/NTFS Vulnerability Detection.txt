@@ -1,0 +1,25 @@
+title: NTFS Vulnerability Detection
+description: The vulnerability can be remotely triggered if having any kind of service allowing file opens of specific names to happen. Its embeddable in HTML, sharred folders etc. Until now only consequence have been running chkdsk on boot- but now the MFT have corrupted
+author: Furkan Celik
+status: stable
+reference:
+- https://twitter.com/jonasLyk/status/1347900440000811010/photo/1
+- https://www.youtube.com/watch?v=IxB7u2aFu6w
+date: 2021/01/18
+tags:
+- attack.impact
+- attack.t1485
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection OR selection1
+  selection:
+    CommandLine|contains:
+    - cd c:\:$i30:$bitmap
+  selection1:
+    EventID:
+    - 55
+fields:
+- CommandLine
+level: high
