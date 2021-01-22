@@ -1,0 +1,23 @@
+title: Remote Code Execution using Docker API
+description: Easy RCE using Docker API on port 2375/tcp
+author: Furkan Celik
+tags:
+- attack.execution
+- attack.T1203
+date: 2020/12/15
+reference:
+- https://twitter.com/ptswarm/status/1338477426276511749/photo/1
+status: stable
+logsource:
+  product: linux
+detection:
+  condition: keyword
+  keyword|contains:
+  - docker -H *:2375 run --rm -it --privileged --net=host -v /:/mnt alpine
+  -  cat /mnt/etc/shadow
+  - chroot /mnt
+fields:
+- keyword
+falsepositives:
+- unknown
+level: critical
