@@ -1,0 +1,33 @@
+title: Domain Controller Suspicious Login Detection
+description: An alarm is triggered when the Domain Controller is logged in as suspicious and the service is created by users you do not know. If attackers can directly gain access to the domain controller in a system, this is a sign of a serious security vulnerability. Exclude the list of current users you use. You need to add Domain Controller machine names.
+author: Furkan Celik
+status: stable
+date: 2021/01/27
+references:
+- local
+tags:
+- attack.T1087
+- attack.Discovery
+level: critical
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection AND NOT filter
+  selection:
+    EventID:
+    - 4624
+    LogonType:
+    - 2
+    - 5
+    - 10
+    AccountDomain|contains:
+    - DomainController
+  filter:
+    AccountName|contains: $
+fields:
+- LogonType
+- AccountName
+- AccountDomain
+falsepositives:
+- Red team activity and system team
