@@ -1,0 +1,28 @@
+title: FortiLogger Arbitrary File Upload  Attempts Detection
+status: stable
+date: 2021/03/26
+tag:
+- attack.T1190
+- attack.initial_access
+reference:
+- https://erberkan.github.io/2021/cve-2021-3378/
+description: This Metasploit module exploits an unauthenticated arbitrary file upload in FortiLogger via an insecure POST request. It has been tested on versions prior to 5.2.0 in Windows 10 Enterprise. FortiLogger  Log and Report System -v4.4.2.2
+author: Furkan Celik
+logsource:
+  category: proxy
+detection:
+  condition: selection
+  selection:
+    action: allowed
+    cs-uri|contains:
+    - /shared/GetProductInfo
+    - /Config/SaveUploadedHotspotLogoFile
+    - /Assets/temp/hotspot/img/logohotspot.asp
+    cs-method:
+    - POST
+fields:
+- cs-uri
+- cs-method
+falsepositives:
+- unknown
+level: medium
