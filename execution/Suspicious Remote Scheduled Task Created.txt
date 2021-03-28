@@ -1,0 +1,27 @@
+title: Suspicious Remote Scheduled Task Created
+description: Remote scheduled tasks are not necessarily malicious, but it's worth checking and verifying their legitimacy.
+author: Furkan Celik
+status: stable
+date: 2021/02/26
+references:
+- local
+tags:
+- attack.T1053
+- attack.Execution
+level: critical
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection AND selection1
+  selection:
+    EventID:
+    - 4624
+    LogonType:
+    - 3
+  selection1:
+    EventID:
+    - 4698
+  timeframe: 1m
+fields:
+- host
