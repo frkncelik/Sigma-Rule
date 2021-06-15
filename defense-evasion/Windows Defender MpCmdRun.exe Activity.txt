@@ -1,0 +1,30 @@
+title: Windows Defender MpCmdRun.exe Activity
+description: Tactics for bypassing Windows. Download file to specified path - Slashes and hyphens also work (/DownloadFile, /url, /path, copy)
+author: Furkan Celik
+status: stable
+date: 2021/06/11
+reference:
+- https://lolbas-project.github.io/lolbas/Binaries/MpCmdRun/
+tags:
+- attack.defense_evasion
+- attack.T1105
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - copy "C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.9-0\MpCmdRun.exe"
+    - -DownloadFile
+    - chdir "C:\ProgramData\Microsoft\Windows Defender\Platform\
+    - -url http
+    - -path
+    Image|endswith:
+    - MpCmdRun.exe
+fields:
+- Image
+- CommandLine
+falsepositives:
+- The downloaded file may indeed be controlled by your system installer.
+level: high
