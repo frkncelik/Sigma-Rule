@@ -1,0 +1,26 @@
+title: Chafer Attack Group Activity Detection
+description: Chafer’s activities have some links to another group known as Crambus (aka Oilrig). Both groups have been observed using the same IP address for command and control purposes. In addition to this, both groups have been seen using a similar infection vector, namely an Excel document which drops a malicious VBS file.
+author: Furkan Celik
+status: experimental
+date: 2021/06/15
+tags:
+- attack.command_and_control
+- attack.T1071
+- attack.T1071.001
+- attack.execution
+- attack.T1204
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - schtasks.exe /create/ F /sc minute /mo 2 /tn "UpdatMachine" /tr %LOCALAPPDATA%\microsoft\Feed\Y658123.vbs
+fields:
+- CommandLine
+falsepositives:
+- "no"
+level: high
+reference:
+- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/chafer-latest-attacks-reveal-heightened-ambitions222
