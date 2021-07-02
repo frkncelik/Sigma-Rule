@@ -1,0 +1,30 @@
+title: Remote code execution in Windows Spooler Service (CVE-2021-1675)
+description: CVE-2021-1675 is a remote code execution in Windows Print Spooler. According to MSRC security bullion, this vulnerability is reported by Zhipeng Huo, Piotr Madej and Zhang Yunhai.
+author: Furkan Celik
+status: testing
+date: 2021/07/02
+tags:
+- attack.T1210
+- attack_lateral_movement
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    Creator_Process_Name:
+    - spoolsv.exe
+    commandline|contains:
+    - wmiPrintNightmare.exe
+    - whoami
+    - net  user
+    New_Process_Name|endswith:
+    - C:\Windows\System32\spool\drivers\
+    EventID:
+    - 4688
+fields:
+- CommandLine
+level: high
+reference:
+- https://github.com/afwu/PrintNightmare
+- https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2021-1675
