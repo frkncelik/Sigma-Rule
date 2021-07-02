@@ -1,0 +1,31 @@
+title: Sodinokibi (aka REvil) Ransomware (via cmdline)
+description: Sodinokibi (aka REvil) has been one of the most prolific ransomware as a service (RaaS) groups over the last couple years. You can capture it with the following cmd actions.
+author: Furkan Celik
+status: stable
+date: 2021/06/29
+tags:
+- attack_initial_access
+- attack.T1486
+- attack_impact
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection or selection1
+  selection1:
+    CommandLine|contains:
+    - rundll32.exe "\AppData\Local\Temp\skull-x64.dat",update /i:"DwarfWing\license.dat"
+    Image:
+    - rundll32.exe
+  selection:
+    CommandLine|contains:
+    - wmic.exe process call create 'regsvr32 -s C:\Users\Public\microsoft.security'
+    Image:
+    - wmic.exe
+fields:
+- CommandLine
+falsepositives:
+- "no"
+level: high
+reference:
+- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
