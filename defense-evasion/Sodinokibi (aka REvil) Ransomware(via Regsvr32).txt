@@ -1,0 +1,26 @@
+title: Sodinokibi (aka REvil) Ransomware(via Regsvr32)
+description: Sodinokibi (aka REvil) has been one of the most prolific ransomware as a service (RaaS) groups over the last couple years. You can capture it with the following registry actions.
+author: Furkan Celik
+tags:
+- attack.defense_evasion
+- attack.T1218
+- attack.T1218.010
+date: 2021/06/29
+status: stable
+logsource:
+  product: windows
+  service: registry_event
+detection:
+  condition: selection
+  selection:
+    TargetObject|contains:
+    - SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\
+    Details|contains|all:
+    - AstraZeneca
+fields:
+- TargetObject
+- Details
+level: critical
+reference:
+- https://support.microsoft.com/en-us/topic/how-to-use-the-regsvr32-tool-and-troubleshoot-regsvr32-error-messages-a98d960a-7392-e6fe-d90a-3f4e0cb543e5
+- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
