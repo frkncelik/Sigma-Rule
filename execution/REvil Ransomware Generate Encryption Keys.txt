@@ -1,0 +1,26 @@
+title: REvil Ransomware Generate Encryption Keys
+description: REvil stores session encryption keys in the host’s registry. Registry key and value pairs generated within either the HKLM or HKCU. The newest REvil Ransomware sample hide this values inside (HKLM\SOFTWARE\WOW6432Node\BlackLivesMatter\) Registry key and values created by REvil, encrypted stat JSON data structure with the same algorithm used to encrypt the session private key stored to the registry
+date: 2021/08/12
+author: Furkan Celik
+tags:
+- attack.persistence
+- attack.T1112
+status: stable
+logsource:
+  product: windows
+  category: registry_event
+detection:
+  condition: selection
+  selection:
+    TargetObject|contains:
+    - SOFTWARE\BlackLivesMatter\54k
+    - SOFTWARE\BlackLivesMatter\Krdfp
+    - SOFTWARE\BlackLivesMatter\a0w0
+    - SOFTWARE\BlackLivesMatter\hq0G6X
+    - SOFTWARE\BlackLivesMatter\XFx41h1r
+    - SOFTWARE\BlackLivesMatter\x4WHjRs
+fields:
+- TargetObject
+level: high
+reference:
+- https://www.threatmonit.io/revil-ransomware-malware-analysis/
