@@ -1,0 +1,35 @@
+title: DeadRinger Chinese Threat Actors - Nebulae Backdoor
+description: The attackers used the legitimate "chrome_frame_helper.exe" - which is part of Google's "Google Chrome Frame" - to load the fake module "chrome_frame_helper.dll", which contained the Nebulae backdoor payload
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1204
+- attack.T1204.002
+- attack.execution
+date: 2021/08/09
+reference:
+- https://www.cybereason.com/blog/deadringer-exposing-chinese-threat-actors-targeting-major-telcos#phase-3
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection or selection1
+  selection1:
+    Image|contains:
+    - chrome_frame_helper.exe
+    ParentImage|contains:
+    - wmiprvse.exe
+  selection:
+    ParentImage|contains:
+    - cmd.exe
+    Image|contains:
+    - net.exe
+    - backup.exe
+    CommandLine|contains:
+    - backup.exe
+fields:
+- Image
+- ParentImage
+falsepositives:
+- unknown
+level: high
