@@ -1,0 +1,31 @@
+title: DeadRinger Chinese Threat Actors - Phase 3
+description: dead ringer attacks consist of different stages. In the 3rd stage, he performs the activities in this rule.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1003
+- attack.T1003.003
+- attack.credential_access
+date: 2021/08/09
+reference:
+- https://www.cybereason.com/blog/deadringer-exposing-chinese-threat-actors-targeting-major-telcos#phase-3
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    Image|contains:
+    - ntdsutil.exe
+    ParentImage:
+    - cmd.exe
+    CommandLine|contains|all:
+    - ac i ntds
+    - ifm
+    - create full c:\root
+fields:
+- Image
+- CommandLine
+falsepositives:
+- unknown
+level: high
