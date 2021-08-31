@@ -1,0 +1,25 @@
+title: Windows 10 (19042) x64 Privilege Escalation Detection
+description: Windows 10 (19042) x64 Privilege Escalation Detection
+author: Furkan Celik
+tags:
+- attack.T1078.002
+- attack.Privilege_Escalation
+date: 2021/08/26
+status: stable
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains|all:
+    - New-Item -Path HKCU:\Software\Classes\ms-settings\shell\open\command -Value cmd.exe -Force
+    - New-ItemProperty -Path HKCU:\Software\Classes\ms-settings\shell\open\command -Name DelegateExecute -PropertyType String -Force
+    - fodhelper
+fields:
+- Commandline
+falsepositives:
+- Red Team Activity
+level: critical
+reference:
+- https://www.linkedin.com/posts/ardabuyukkaya_windows-10-19042-x64-privilege-escalation-activity-6787776889671970816-dJjV/
