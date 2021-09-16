@@ -1,0 +1,21 @@
+title: Malicious Sharp Login Prompt Detection
+description: This Program creates a login prompt to gather username and password of the current user. This project allows red team to phish username and password of the current user without touching lsass and having adminitrator credentials on the system.
+tags:
+- attack.credential_access
+- attack.T1003
+date: 2021/09/01
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - SharpLoginPrompt.exe
+fields:
+- CommandLine
+level: high
+reference:
+- https://github.com/shantanu561993/SharpLoginPrompt/tree/master/SharpLoginPrompt
