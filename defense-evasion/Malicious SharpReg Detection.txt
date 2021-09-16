@@ -1,0 +1,21 @@
+title: Malicious SharpReg Detection
+description: SharpReg is a simple code set to interact with the Remote Registry service API using the same SMB process as reg.exe, which uses TCP port 445. This code is compatible with Cobalt Strike.
+tags:
+- attack.defense_evasion
+- attack.T1112
+date: 2021/09/01
+author: Furkan Celik
+status: stable
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - SharpReg.exe
+fields:
+- CommandLine
+level: high
+reference:
+- https://github.com/jnqpblc/SharpReg
