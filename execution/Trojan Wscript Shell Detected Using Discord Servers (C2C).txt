@@ -1,23 +1,32 @@
 title: Trojan Wscript Shell Detected Using Discord Servers (C2C)
-description: The attacker makes the discord server C2C and makes the victim download the file via excel. Then it writes the file under "ProgramData" with vmi.
+description: The attacker makes the discord server C2C and makes the victim download the file via excel. Then it writes the file under "ProgramData" with vmi. If you don't use discord in your network. I suggest you block cdn.discord.com and discord.com.
 author: Furkan Celik
 status: stable
-date: 2021/10/20
+date: 2021/11/03
+references:
+- local
+- https://www.zscaler.com/blogs/security-research/discord-cdn-popular-choice-hosting-malicious-payloads
 tags:
 - attack.execution
 - attack.T1059
+detection:
+  condition: all of them
+falsepositives:
+- "no"
+level: high
+---
 logsource:
   product: windows
   service: powershell
 detection:
-  condition: selection
-  selection:
-    CommandLine|contains:
-    - wmic process call create rundll32.exe C:\\ProgramData
-fields:
-- CommandLine
-falsepositives:
-- "no"
-level: high
-references:
-- local
+  CommandLine|contains:
+  - wmic process call create rundll32.exe C:\\ProgramData
+---
+logsource:
+  product: proxy
+  service: webserver
+detection:
+  c-uri:
+  - "https://cdn.discordapp.com/attachments/899632167859146765/899632317474164746/7_System.Management.Automation.Resources.dll"
+  - "https://cdn.discordapp.com/attachments/899632167859146765/899632310218014720/4_wmpnssci.dll"
+  - "https://cdn.discordapp.com/attachments/899632167859146765/899632305084178453/2_Microsoft.VisualStudio.Tools.Applications.Contract.dll"
