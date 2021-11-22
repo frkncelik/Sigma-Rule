@@ -1,0 +1,27 @@
+title: Modified Gh0st RAT Detection
+description: It created multiple malicious services.
+author: Furkan Celik
+status: stable
+references:
+- https://blog.katastros.com/a?ID=f855580b-588e-4837-92d0-61903846c7ff
+date: 2021/11/17
+tags:
+- attack.persistence
+- attack.T1543.003
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4697
+    ServiceName:
+    - 'HIDMgr'
+    - 'RasconMan'
+    - 'TrkSvr'
+fields:
+- ServiceName
+falsepositives:
+- none
+level: critical
