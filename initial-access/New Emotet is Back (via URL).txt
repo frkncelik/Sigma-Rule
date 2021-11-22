@@ -1,0 +1,29 @@
+title: New Emotet is Back (via URL)
+description: Emotet detects URLs made up of macros to infect DLL files.
+author: Furkan Celik
+status: stable
+date: 2021/11/17
+references: https://isc.sans.edu/diary/28044
+tags:
+- attack.T1566
+- attack.initial_access
+logsource:
+  product: proxy
+detection:
+  condition: selection
+  selection:
+    c-uri|contains:
+    - wp-content/k6K/
+    - wp-includes/XBByNUNWvIEvawb68/
+    - pvhko/a/
+    - shop/wp-admin/PP/
+    - content/5MfZPgP06/
+    - content/nVgyRFrTE68Yd9s6/
+    - wp-content/aPIm2GsjA/
+    method:
+    - GET
+fields:
+- c-uri
+falsepositives:
+- unknown
+level: critical
