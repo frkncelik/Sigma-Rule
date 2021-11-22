@@ -1,0 +1,35 @@
+title: 11 Malicious Python Packages Detected in PyPI Repository
+description: 11 malicious Python packages have been identified by JFrog researchers in the Python Package Directory (PyPI) repository that can hijack Discord access tokens, passwords, and even perform dependency confusion attacks.
+author: Furkan Celik
+tags:
+- attack.execution
+- attack.T1059.006
+date: 2021/11/22
+references:
+- https://jfrog.com/blog/python-malware-imitates-signed-pypi-traffic-in-novel-exfiltration-technique/
+status: stable
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - pptest
+    - yandex-yt
+    - ipboards
+    - owlmoon
+    - DiscordSafety
+    - trrfab
+    - 10Cent10
+    - 10Cent11
+    - yiffparty
+    Image|endswith:
+    - /cmd.exe
+    - /python.exe
+    - /powershell.exe
+fields:
+- CommandLine
+falsepositives:
+- none
+level: critical
