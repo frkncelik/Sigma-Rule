@@ -1,0 +1,40 @@
+title: log4j RCE [CVE-2021-44228] Exploitation Detection Patterns (via sysmon)
+description: After performing the exploit, the java.exe process is triggered and opens a connection to the outside. As far as I have observed, it is available in legal traffic, but you can search for the sourceip address you have obtained from the proxy as destinationip for this rule.
+author: Furkan Celik
+status: experimental
+tags:
+- attack.initial_access
+- attack.T1190
+date: 2021/12/14
+references:
+- https://www.randori.com/blog/cve-2021-44228/
+- https://blog.cloudflare.com/cve-2021-44228-log4j-rce-0-day-mitigation/
+- https://www-cnblogs-com.translate.goog/yyhuni/p/15088134.html?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US
+- https://gist.github.com/Neo23x0/e4c8b03ff8cdf1fa63b7d15db6e3860b
+- https://www.lunasec.io/docs/blog/log4j-zero-day/
+- https://www.reddit.com/r/programming/comments/rcxehp/rce_0day_exploit_found_in_log4j_a_popular_java/
+- https://github.com/YfryTchsGD/Log4jAttackSurface
+- https://gist.github.com/byt3bl33d3r/46661bc206d323e6770907d259e009b6
+- https://github.com/tangxiaofeng7/apache-log4j-poc
+- https://github.com/apache/logging-log4j2/pull/608
+- local
+logsource:
+  product: windows
+  service: network_connection
+detection:
+  condition: selection and NOT filter
+  selection:
+   Image|endswith:
+    - java.exe
+  filter:
+    DestinationIp|startswith:
+    - '10.'
+    - '127.0.0.1'
+    - '192.168.'
+fields:
+- Image
+- SourceIp
+- DestinationIp
+falsepositives:
+- unknown
+level: high
