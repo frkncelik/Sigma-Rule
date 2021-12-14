@@ -1,0 +1,24 @@
+title: New Cryptbot stealer Detection (December)
+description: They take action through the KMSPico software to steal their credentials.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1003
+- attack.credential_access
+references:
+- https://redcanary.com/blog/kmspico-cryptbot/
+logsource:
+  product: windows
+  category: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains|all:
+    - rd /s /q
+    - timeout
+    - del /f /q
+fields:
+- "CommandLine"
+falsepositives:
+- "none"
+level: "high"
