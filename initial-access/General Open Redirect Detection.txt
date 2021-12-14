@@ -1,0 +1,30 @@
+title: General Open Redirect Detection
+description: In general, it captures parameters commonly used by attackers. To see this, server logs are required.
+status: stable
+date: 2021/12/08
+tags:
+- attack.T1189
+- initial_access
+references:
+- https://hackerone.com/reports/840736
+author: Furkan Celik
+logsource:
+  category: webserver
+detection:
+  condition: selection | count(destinationip) by sourceip > 10
+  selection:
+    cs-uri|contains:
+    - '..//'
+    - '...//'
+    - '....//'
+    - '..\\'
+    - '...\\'
+    - '....\\'
+  timeframe: 60m
+fields:
+- cs-uri
+- sourceip
+- destinationip
+falsepositives:
+- none
+level: medium
