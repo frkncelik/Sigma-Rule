@@ -24,10 +24,10 @@ detection:
     - 10Cent10
     - 10Cent11
     - yiffparty
-    Image|endswith:
-    - /cmd.exe
-    - /python.exe
-    - /powershell.exe
+    Image|contains:
+    - cmd.exe
+    - python.exe
+    - powershell.exe
 fields:
 - CommandLine
 falsepositives:
