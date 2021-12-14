@@ -1,0 +1,27 @@
+title: New Agent Tesla Detection (December) (via Scheduled Task)
+description: New agent tesla variant It creates a task with mshta.exe.
+author: Furkan Celik
+tags:
+- attack.T1053
+- attack.Persistence
+- attack.Privilege_Escalation
+date: 2021/12/02
+references:
+- https://app.any.run/tasks/6a4bdba0-6f75-4a06-9891-35a7f1950027/
+status: stable
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    Image|contains:
+    - schtask.exe
+    CommandLine|contains|all:
+    - ' /create /sc MINUTE /mo 120 /tn ""update++++""'
+    - '""\""MsHtA""\""https://madarbloghogya.blogspot.com/p/mutibacknewone1.html""'
+fields:
+- TaskContent
+falsepositives:
+- none
+level: critical
