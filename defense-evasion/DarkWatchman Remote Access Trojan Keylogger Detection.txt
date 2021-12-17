@@ -1,0 +1,38 @@
+title: DarkWatchman Remote Access Trojan Keylogger Detection 
+description: The malware, called “DarkWatchman”, uses the Windows Registry for all storage operations. DarkWatchman is stored in the registry in encoded text format and the executable is not written to disk. This makes it possible for the malware not to be detected by antivirus programs and to persist in the target system.
+author: Furkan Celik
+tags:
+- attack.defense_evasion
+- attack.T1218
+date: 2021/12/17
+reference:
+- https://www.prevailion.com/darkwatchman-new-fileness-techniques/
+status: stable
+logsource:
+  product: windows
+  service: registry_event
+detection:
+  condition: selection
+  selection:
+    TargetObject|contains:
+    - HKCU\Software\Microsoft\Windows\DWM
+    Details|contains|all:
+    - uid + 's'
+    - uid + 'm'
+    - uid + 'v'
+    - uid + 'c'
+    - uid + 't'
+    - uid + 'a'
+    - uid + 'p'
+    - uid + 'h'
+    - uid + 'j'
+    - uid + 'z'
+    - uid + 'b'
+    - uid + 'r'
+    - uid + '1'
+fields:
+- TargetObject
+- Details
+falsepositives:
+- none
+level: critical
