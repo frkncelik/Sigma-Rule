@@ -1,0 +1,43 @@
+title: Detection of Earth Centaur (APT) Instruments and Techniques
+description: After the threat actors get access to the vulnerable hosts by using ProxyLogon exploits and web shells, they use bitsadmin to download the next-stage loader (loaders are detected as Nerapack) as well as its payload file
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1059.001
+- attack.T1090
+- attack.T1197
+references:
+- https://www.trendmicro.com/en_us/research/21/l/collecting-in-the-dark-tropic-trooper-targets-transportation-and-government-organizations.html
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: selection_Loaders or selection_Loaders2 or selection_reverse_proxy or selection_reverse_proxy2
+  selection_Loaders:
+    CommandLine|contains|all:
+    - Start-BitsTransfer
+    - dfmanager.exe
+    - BitsTransfer
+    - command 
+  selection_Loaders2:
+    CommandLine|contains|all:
+    - Start-BitsTransfer
+    - BitsTransfer
+    - Temp/dfmanager.bin
+    - command
+  selection_reverse_proxy:
+    CommandLine|contains|all:
+    - ch.exe
+    - DownloadFile
+    - command 
+  selection_reverse_proxy2:
+    CommandLine|contains|all:
+    - ch.exe
+    - client
+    - socks 
+fields:
+- CommandLine
+falsepositives:
+- 'none'
+level: high
