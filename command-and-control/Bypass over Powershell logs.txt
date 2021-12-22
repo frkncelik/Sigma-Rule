@@ -2,7 +2,7 @@ title: Bypass over Powershell logs
 description: Displays bypass operations via Powershell logs. Lists script block texts
 author: Furkan Celik
 status: stable
-reference:
+references:
 - https://www.myeventlog.com/search/show/980
 - https://nsfocusglobal.com/Attack-and-Defense-Around-PowerShell-Event-Logging
 logsource:
