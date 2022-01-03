@@ -1,0 +1,36 @@
+title: Blacktech Group's New Malicious FLAGPRO
+description: The main functions of Flagpro are as follows.Downloading and executing additional payloads. Executing operating system commands and sending the results to the C&C server. Gathering the Windows authentication information and sending it to the C&C server.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1204
+- attack.execution
+references:
+- https://insight-jp.nttsecurity.com/post/102hf3q/flagpro-the-new-malware-used-by-blacktech
+logsource:
+  product: windows
+  category: powershell
+detection:
+  condition: selection or selection1
+  selection:
+    CommandLine|contains|all:
+    - cmd /c ipconfig /all
+    - netstat -ano
+    - whoami
+    - tasklist
+    - net user
+    - net localgroup administrators
+  selection1:
+    CommandLine|contains|all:
+    - cmd /c ipconfig /all
+    - netstat -ano
+    - tasklist
+    - whoami
+    - net user
+    - net localgroup administrators
+    - net view
+fields:
+- "CommandLine"
+falsepositives:
+- "none"
+level: "high"
