@@ -2,7 +2,7 @@ title: SQL Agent Scheduled Tasks and Services Detection
 description: An attack targeting the aviation industry has been identified. You can detect the  list of this Scheduled Tasks and Services attack by installing backdoor on SQL servers on your system.
 author: Furkan Celik
 date: 2020/04/02
-Reference:
+References:
 - https://github.com/guardicore/labs_campaigns/blob/master/Vollgar/scheduled_tasks_services.md
 - https://thehackernews.com/2020/04/backdoor-.html
 tags:
