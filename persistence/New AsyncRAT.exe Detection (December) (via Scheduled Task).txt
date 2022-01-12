@@ -1,0 +1,25 @@
+title: New AsyncRAT.exe Detection (December) (via Scheduled Task)
+description: sdf
+author: Furkan Celik
+status: stable
+date: 2022/01/12
+references:
+- https://www.virustotal.com/gui/file/18912d82205dab75e777d2bb71edfae3baa4f97c042770db118354f889062e39/behavior/C2AE
+- https://twitter.com/pr0xylife/status/1471832006048858121
+tags:
+- attack.persistence
+- attack.execution
+- attack.T1053.005
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    - schtasks /Create /TN "Updates\WWzIimRjH"
+fields:
+- CommandLine
+falsepositives:
+- none
+level: high
