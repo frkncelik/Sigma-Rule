@@ -1,0 +1,37 @@
+title: Bypassing Windows Defender Detection (Trojan)
+description: To bypass windows defender, you need to change the alert part.
+author: Furkan Celik
+references:
+- https://twitter.com/hyp3rlinx/status/1480651583172091904
+date: 2022/01/12
+tags:
+- attack.T1562
+- attack.defense_evasion
+status: stable
+logsource:
+  product: windows
+  category: powershell
+detection:
+  condition: selection or selection1
+  selection:
+    CommandLine|contains|all:
+    - rundll32.exe
+    - javascript
+    - \..\..\..\mshtml
+    - RunHTMLApplication
+    - alert(666)
+  selection1:
+    CommandLine|contains|all:
+    - rundll32.exe
+    - javascript
+    - \..\..\..\mshtml
+    - RunHTMLApplication
+    - document.write()
+    - GetObject
+    - script
+    - http
+fields:
+- CommandLine
+falsepositives:
+- none
+level: high
