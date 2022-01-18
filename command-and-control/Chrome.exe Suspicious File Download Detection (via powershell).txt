@@ -1,0 +1,31 @@
+title: Chrome.exe Suspicious File Download Detection (via powershell)
+description: Attackers can use various methods to download malicious files from command and control servers to victims' computers. Chrome.exe can be used as one of these methods. The extension of the file must be html to enable the download.
+author: Furkan Celik
+status: stable
+tags:
+- attack.command_and_control
+- attack.T1105
+date: 2022/01/13
+references:
+- https://twitter.com/mrd0x/status/1478234484881436672/photo/1
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains|all:
+    - chrome.exe
+    - --headless
+    - --enable-logging
+    - --disable-gpu
+    - --dump-dom
+    - http
+    - out.
+fields:
+- Image
+- ParentImage
+- CommandLine
+falsepositives:
+- none
+level: medium
