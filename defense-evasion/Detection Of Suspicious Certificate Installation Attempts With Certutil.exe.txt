@@ -1,0 +1,27 @@
+title: Detection Of Suspicious Certificate Installation Attempts With Certutil.exe 
+description: Creates a root CA with certutil. It also detects an Attempt to Add Certificate to Untrusted Store.
+author: Furkan Celik
+status: stable
+tags:
+- attack.defense_evasion
+- attack.T1553
+- attack.T1553.004
+date: 2022/01/24
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1553.004/T1553.004.md
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    Image|contains:
+    - certutil.exe
+    CommandLine|contains:
+    - -addstore
+fields:
+- Image
+- CommandLine
+falsepositives:
+- Activities by Red Team, system and security admins.
+level: high
