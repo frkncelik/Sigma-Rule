@@ -1,0 +1,25 @@
+title: Auto Admin Login Registry Entry by BlackMatter Ransomware (via registry_event)
+description: It is for detecting a suspicious registry change to apply automatic administrator login to a host. This technique was used by the BlackMatter ransomware group.
+author: Furkan Celik
+tags:
+- attack.credential_access
+- attack.T1552.002
+date: 2022/01/24
+status: stable
+logsource:
+  product: windows
+  service: registry_event
+detection:
+  condition: selection
+  selection:
+    TargetObject|contains:
+    - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\AutoAdminLogon
+    Details:
+    - 1
+fields:
+- TargetObject
+- Details
+falsepositives:
+- unknown
+level: high
+references: https://news.sophos.com/en-us/2021/08/09/blackmatter-ransomware-emerges-from-the-shadow-of-darkside/
