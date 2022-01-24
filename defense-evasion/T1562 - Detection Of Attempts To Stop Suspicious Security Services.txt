@@ -1,0 +1,28 @@
+title: T1562 - Detection Of Attempts To Stop Suspicious Security Services
+description: It looks for attempts to stop security-related services.
+author: Furkan Celik
+status: stable
+tags:
+- attack.defense_evasion
+- attack.T1562
+date: 2022/01/24
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md#atomic-test-14---disable-arbitrary-security-windows-service
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    Image|contains:
+    - sc.exe
+    CommandLine|contains:
+    - config
+    - start
+    - disable
+fields:
+- Image
+- CommandLine
+falsepositives:
+- Activities by Red Team, system and security admins.
+level: high
