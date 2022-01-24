@@ -1,5 +1,5 @@
-title: Bypassing Windows Defender Detection (Trojan)
-description: To bypass windows defender, you need to change the alert part.
+title: Bypassing Windows Defender Detection (Trojan) (via process_creation)
+description: Two components required to defeat Trojan:Win32/Powessere.G detection in Windows Defender. extra path traversal when referencing mshtml. concatenation when constructing the remote server URL scheme script+http. To bypass windows defender, you need to change the alert part. The rule also detects this situation.
 author: Furkan Celik
 references:
 - https://twitter.com/hyp3rlinx/status/1480651583172091904
@@ -10,7 +10,7 @@ tags:
 status: stable
 logsource:
   product: windows
-  category: powershell
+  category: process_creation 
 detection:
   condition: selection or selection1
   selection:
