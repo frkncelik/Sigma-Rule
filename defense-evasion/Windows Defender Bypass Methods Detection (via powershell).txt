@@ -1,0 +1,25 @@
+title: Windows Defender Bypass Methods Detection (via powershell)
+description: There are many ways to bypass windows defender. One of them is to change the name and metadata of a malicious file to DumpStack.log. This way win defender can be bypassed. This is because windows defender does not scan the DumpStack.log file. You can watch the POC video in the reference. The situation that makes the log extension work on CMD is that the PE header is adaptive.
+author: Furkan Celik
+tags:
+- attack.T1562
+- attack.defense_evasion
+status: stable
+logsource:
+  product: windows
+  category: powershell
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains:
+    -  DumpStack.log
+fields:
+- Image
+- ParentImage
+- CommandLine
+falsepositives:
+- none
+level: high
+references:
+- https://www.youtube.com/watch?v=Km_C2fL62zU
+- https://twitter.com/mrd0x/status/1479094189048713219
