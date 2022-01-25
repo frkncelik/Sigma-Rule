@@ -1,0 +1,43 @@
+title: Powershell Process Injection To Known Windows Process (via sysmon)
+description: Attackers use some methods to ensure persistence after infiltrating the computer. One of them injects legal windows processes using powershell.exe. This is an unusual situation.
+author: Furkan Celik
+status: stable
+date: 2022/01/20
+references:
+- https://materials.rangeforce.com/tutorial/2020/06/10/Sysmon-Process-Injection/
+- https://redcanary.com/threat-detection-report/techniques/process-injection/
+- https://blog.checkpoint.com/2021/03/11/february-2021s-most-wanted-malware-trickbot-takes-over-following-emotet-shutdown/
+tags:
+- attack.persistence
+- attack.privilege_scalation
+- attack.T1055
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 8
+    SourceImage|contains:
+    - powershell.exe
+    TargetImage|contains:
+    - svchost.exe
+    - csrss.exe
+    - gpupdate.exe
+    - explorer.exe
+    - services.exe
+    - csrss.exe
+    - winlogon.exe
+    - smss.exe
+    - wininit.exe
+    - userinit.exe
+    - spoolsv.exe
+    - powercfg.exe
+    - searchIndexer.exe
+fields:
+- SourceImage
+- TargetImage
+falsepositives:
+- none
+level: high
