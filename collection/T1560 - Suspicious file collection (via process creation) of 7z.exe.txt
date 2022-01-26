@@ -1,0 +1,29 @@
+title: T1560 - Suspicious File Collection Of 7z.exe (via process creation) 
+description: Suspicion may occur when 7z.exe is created from rundll32.exe or dllhost.exe. 7z.exe can also be created after rundll32.exe or dllhost.exe injection. For this reason, injection situations should also be analyzed. Archiving files will result in exfiltration.
+author: Furkan Celik
+status: stable
+tags:
+- attack.collection
+- attack.T1560
+- attack.privilege_escalation
+date: 2022/01/24
+references:
+- https://thedfirreport.com/2021/01/31/bazar-no-ryuk/
+- https://www.microsoft.com/security/blog/2021/01/20/deep-dive-into-the-solorigate-second-stage-activation-from-sunburst-to-teardrop-and-raindrop/
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    ParentImage|contains:
+    - rundll32.exe
+    - dllhost.exe
+    Image|contains:
+    - 7z
+fields:
+- Image
+- ParentImage
+falsepositives:
+- unknown
+level: high
