@@ -1,0 +1,35 @@
+title: Cobalt Strike Named Pipes Detection (via sysmon)
+description: If there are named pipe processes, check for parallel processes to identify suspicious behavior. If explorer.exe is running the named pipe processes, check the process injection(eventid 8) status. Network connection may be established. It could be process injection. It is useful to review and follow.
+status: experimental
+date: 2022/01/20
+author: Furkan Celik
+references:
+- https://www.fireeye.com/blog/threat-research/2021/05/shining-a-light-on-darkside-ransomware-operations.html
+- https://blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/
+tags:
+- attack.T1055
+- attack.privilege_escalation
+- attack.defense_evasion
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 18
+    - 17
+    PipeName|contains:
+    - spoolss_
+    - win_svc
+    - ntsvcs
+    - UIA_PIPE
+    - mojo
+    - srvsvc_
+    - wkssvc
+    - msagent_
+fields:
+- PipeName
+falsepositives:
+- unknown
+level: high
