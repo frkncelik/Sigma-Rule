@@ -1,0 +1,46 @@
+title: Detection Of Suspicious Network Connections From The Curl.exe Process (via network connection)
+description: Curl.exe is a legal process on windows. Attackers can use it to download malware. It is necessary to monitor the network connections of the curl.exe process.
+status: stable
+author: Furkan Celik
+references:
+- https://isc.sans.edu/forums/diary/Using+Curl+to+Retrieve+Malicious+Websites/8038/
+tags:
+- attack.T1105
+- attack.command_and_control
+date: 2022/01/25
+logsource:
+  category: network_connection
+  product: windows
+detection:
+  condition: selection and NOT ip_privatev4
+  selection:
+    Image|contains: curl.exe
+  ip_privatev4:
+    IpAddress|startswith:
+    - '10.'       #10.0.0.0/8
+    - '192.168.'       #192.168.0.0/16
+    - '172.16.'       #172.16.0.0/12
+    - '172.17.'
+    - '172.18.'
+    - '172.19.'
+    - '172.20.'
+    - '172.21.'
+    - '172.22.'
+    - '172.23.'
+    - '172.24.'
+    - '172.25.'
+    - '172.26.'
+    - '172.27.'
+    - '172.28.'
+    - '172.29.'
+    - '172.30.'
+    - '172.31.'
+    - '127.'       #127.0.0.0/8
+    - '169.254.'       #169.254.0.0/16
+fields:
+- Image
+- DestinationIp
+- DestinationPort
+level: medium
+falsepositives:
+- Legitimate curl.exe activity
