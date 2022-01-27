@@ -1,0 +1,30 @@
+title: Suspicious Privilege Escalation Detection With AutoSUID [Linux] (via process creation)
+description: AutoSUID is an open source application. AutoSUID can be used for exploitation. It should be followed as a command.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1222
+- attack.defense_evasion
+date: 2022/01/26
+references:
+- https://github.com/IvanGlinkin/AutoSUID
+- https://github.com/IvanGlinkin/AutoSUID/blob/main/AutoSUID.sh
+logsource:
+  product: linux
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    CommandLine|contains|all:
+    - find /   
+    - -xdev 
+    - -user 
+    - root
+    - -perm -4000 
+    - -o -perm -2000
+    - -o -perm -6000
+fields:
+- CommandLine
+falsepositives:
+- System admin activities
+level: medium
