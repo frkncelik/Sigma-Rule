@@ -1,0 +1,47 @@
+title: Suspicious Regasm.exe Network Connections Detection (via Network Connection)
+description: This technique can be used to circumvent control products. Regasm.exe is legal. The traffic going through regasm.exe should definitely be examined. It is recommended to block directly if necessary.
+author: Furkan Celik
+status: stable
+references:
+- https://community.rsa.com/t5/netwitness-blog/detecting-lolbas-tactics-with-the-rsa-netwitness-platform-regasm/ba-p/608534
+- https://medium.com/axon-technologies/threat-hunting-for-the-most-common-mitre-att-ck-techniques-part-4-72e4fc8178bc
+tags:
+- attack.defense_evasion
+- attack.T1218.009
+- attack.T1218
+date: 2022/01/20
+logsource:
+  category: network_connection
+  product: windows
+detection:
+  selection:
+    Image|contains: regasm.exe
+  ip_privatev4:
+    IpAddress|startswith:
+    - '10.'       #10.0.0.0/8
+    - '192.168.'       #192.168.0.0/16
+    - '172.16.'       #172.16.0.0/12
+    - '172.17.'
+    - '172.18.'
+    - '172.19.'
+    - '172.20.'
+    - '172.21.'
+    - '172.22.'
+    - '172.23.'
+    - '172.24.'
+    - '172.25.'
+    - '172.26.'
+    - '172.27.'
+    - '172.28.'
+    - '172.29.'
+    - '172.30.'
+    - '172.31.'
+    - '127.'       #127.0.0.0/8
+    - '169.254.'       #169.254.0.0/16
+  condition: selection and not ip_privatev4
+fields:
+- Image
+- IpAddress
+falsepositives:
+- Exclude your local ip addresses.
+level: high
