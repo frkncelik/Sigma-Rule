@@ -1,0 +1,23 @@
+title: PwnKit Local Privilege Escalation Detection [CVE-2021-4034] [Linux] (via process creation)
+description: A critical memory corruption vulnerability has been identified in Polkit, formerly known as PolicyKit. The security vulnerability, called PwnKit and tracked with code CVE-2021-4034, is located in PolKit's pkexec tool. allows any unprivileged user to gain full root privileges on a vulnerable host.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1068
+- attack.privilege_escalation
+date: 2022/01/27
+references:
+- https://blog.qualys.com/vulnerabilities-threat-research/2022/01/25/pwnkit-local-privilege-escalation-vulnerability-discovered-in-polkits-pkexec-cve-2021-4034
+logsource:
+  product: linux
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    CommandLine|contains:
+    - /usr/bin/pkexec
+fields:
+- CommandLine
+falsepositives:
+- unknown
+level: high
