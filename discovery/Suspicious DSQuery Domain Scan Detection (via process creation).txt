@@ -1,0 +1,26 @@
+title: Suspicious DSQuery Domain Scan Detection (via process creation)
+description: If the trustdomain command is run with dsquery.exe, it generates an alarm. dsquery.exe exists only on servers. While searching, you can only search the servers for performance. This is a method often used for reconnaissance.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1482
+- attack.discovery
+date: 2022/01/26
+references:
+- http://www.harmj0y.net/blog/redteaming/a-guide-to-attacking-domain-trusts/
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    Image|contains:
+    - dsquery.exe
+    CommandLine|contains:
+    - trustedDomain
+fields:
+- Image
+- CommandLine
+falsepositives:
+- It can be done by the system administrator.
+level: medium
