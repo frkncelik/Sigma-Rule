@@ -1,0 +1,24 @@
+title: AppLocker Bypass Attempt with Regsvcs.exe (via process creation)
+description: Regsvcs.exe is one of the legal processes of windows. Loads and saves an assembly. Attackers can use the regsvcs.exe process to execute malware inside the DLL file. It bypasses the application whitelist when it executes your malicious dll file.
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1218.009
+- attack.defense_evasion
+references:
+- https://pentestlab.blog/2017/05/19/applocker-bypass-regasm-and-regsvcs/
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains|all:
+    - regsvcs.exe
+    - .dll
+fields:
+- Image
+- CommandLine
+falsepositives:
+- none
+level: high
