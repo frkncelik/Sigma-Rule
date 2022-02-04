@@ -1,0 +1,23 @@
+title: DeadBolt Ransomware Suspicious Activities on QNAP Devices (via file_event)
+description: After infiltrating Qnap devices, random named files are created under the mnt/ directory. Follow the mnt/HDA_ROOT array substring with this rule. DeadBolt ransomware
+author: Furkan Celik
+references:
+- https://www.bleepingcomputer.com/forums/t/767603/deadbolt-ransomware-support-topic-qnap-devices-deadbolt-extension/
+tags:
+- attack.T1486
+- attack.Impact
+status: stable
+logsource:
+  product: Linux
+  category: file_event
+detection:
+  condition: selection
+  selection:
+    TargetFilename|endswith:
+    - mnt/HDA_ROOT/
+fields:
+- Image
+- TargetFilename
+falsepositives:
+- unlikely
+level: high
