@@ -1,0 +1,25 @@
+title: Rundll32 - Setupapi Application Bypass Detection (via cmdline)
+description: Rundll32.exe is the legal process of windows. With this rule rundll32.exe they can load script code using setupapi.dll.
+author: Furkan Celik
+status: stable
+date: 2022/01/28
+references: 
+- https://lolbas-project.github.io/lolbas/Libraries/Setupapi/
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.011/T1218.011.md#atomic-test-6---rundll32-setupapidll-execution
+tags:
+- attack.T1218.011
+- attack.defense_evasion
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    CommandLine|contains|all:
+    - rundll32.exe
+    - setupapi.dll
+fields:
+- CommandLine
+falsepositives:
+- none
+level: high
