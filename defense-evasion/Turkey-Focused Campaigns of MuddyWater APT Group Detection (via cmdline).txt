@@ -1,0 +1,27 @@
+title: Turkey-Focused Campaigns of MuddyWater APT Group Detection (via cmdline)
+description: The Muddywater group carried out an attack targeting Turkey. It can also apply the same technique to institutions of different countries. He used the names of the ministries of Turkey in the content of the e-mail. One of the techniques they use is lolbins to run the registry. In this they use SyncAppyPublishingServer.vbs.
+author: Furkan Celik
+status: stable
+tags:
+- attack.defense_evasion
+- attack.T1218
+date: 2022/02/01
+references:
+- https://blog.talosintelligence.com/2022/01/iranian-apt-muddywater-targets-turkey.html
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    CommandLine|contains|all:
+    - SyncAppvPublishingServer.vbs
+    - String
+    - Get-content
+    - .conf
+fields:
+- Image
+- CommandLine
+falsepositives:
+- none
+level: high
