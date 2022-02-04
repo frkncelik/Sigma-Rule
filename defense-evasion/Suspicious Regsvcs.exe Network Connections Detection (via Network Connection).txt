@@ -1,0 +1,50 @@
+title: Suspicious Regsvcs.exe Network Connections Detection (via Network Connection)
+description: This technique can be used to circumvent control products. regsvcs.exe is legit. The traffic passing through Regsvcs.exe must be examined. In particular, the traffic should be analyzed from the network, and the external network should be analyzed directly from the internal. It is recommended to block directly if necessary.
+author: Furkan Celik
+status: stable
+references:
+- https://community.rsa.com/t5/netwitness-blog/detecting-lolbas-tactics-with-the-rsa-netwitness-platform-regasm/ba-p/608534
+- https://attack.mitre.org/techniques/T1218/009/
+- https://docs.microsoft.com/tr-tr/dotnet/framework/tools/regsvcs-exe-net-services-installation-tool
+- https://fusecommunity.fortinet.com/viewdocument/hunts-regsvcsregasm-t1121?CommunityKey=9f1420e8-e3c6-4535-8cae-3fa714da66d8&tab=librarydocuments
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.009/T1218.009.md
+tags:
+- attack.defense_evasion
+- attack.T1218.009
+- attack.T1218
+date: 2022/02/02
+logsource:
+  category: network_connection
+  product: windows
+detection:
+  selection:
+    Image|contains: regsvcs.exe
+  ip_privatev4:
+    dst_ip|startswith:
+    - '10.'       #10.0.0.0/8
+    - '192.168.'       #192.168.0.0/16
+    - '172.16.'       #172.16.0.0/12
+    - '172.17.'
+    - '172.18.'
+    - '172.19.'
+    - '172.20.'
+    - '172.21.'
+    - '172.22.'
+    - '172.23.'
+    - '172.24.'
+    - '172.25.'
+    - '172.26.'
+    - '172.27.'
+    - '172.28.'
+    - '172.29.'
+    - '172.30.'
+    - '172.31.'
+    - '127.'       #127.0.0.0/8
+    - '169.254.'       #169.254.0.0/16
+  condition: selection and not ip_privatev4
+fields:
+- Image
+- dst_ip
+falsepositives:
+- Exclude your local ip addresses.
+level: high
