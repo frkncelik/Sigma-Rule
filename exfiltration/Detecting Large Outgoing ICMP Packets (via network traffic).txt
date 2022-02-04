@@ -1,0 +1,48 @@
+title: Detecting Large Outgoing ICMP Packets (via network traffic)
+description: If there are more than 2000 bytes of network traffic packets from the same Local source ip address to the same external ip network, it should be examined. There may be data leakage. direction=L2R
+author: Furkan Celik
+status: stable
+tags:
+- attack.T1095
+date: 2022/01/26
+references:
+- local
+logsource:
+  category: firewall
+detection:
+  condition: (selection and not ip_privatev4) | count (dst_ip) by total_byte > 3000
+  selection:
+    protocol: icmp
+    timeframe: 15m
+    action:
+    - allowed
+  ip_privatev4:
+    dst_ip|startswith:
+    - '10.'       #10.0.0.0/8
+    - '192.168.'       #192.168.0.0/16
+    - '172.16.'       #172.16.0.0/12
+    - '172.17.'
+    - '172.18.'
+    - '172.19.'
+    - '172.20.'
+    - '172.21.'
+    - '172.22.'
+    - '172.23.'
+    - '172.24.'
+    - '172.25.'
+    - '172.26.'
+    - '172.27.'
+    - '172.28.'
+    - '172.29.'
+    - '172.30.'
+    - '172.31.'
+    - '127.'       #127.0.0.0/8
+    - '169.254.'       #169.254.0.0/16
+fields:
+- src_ip
+- dst_ip
+- dst_port
+- total_byte
+falsepositives:
+- skype, zoom etc.
+level: high
