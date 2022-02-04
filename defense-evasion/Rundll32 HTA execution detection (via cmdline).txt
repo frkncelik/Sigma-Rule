@@ -1,0 +1,28 @@
+title: Rundll32 HTA execution detection (via cmdline)
+description: JavaScript, VBScript, and About commands should be followed along with rundll32. This type of behavior is common with fileless malware or app whitelisting bypass techniques.
+author: Furkan Celik
+status: stable
+date: 2022/01/28
+references: 
+- https://github.com/redcanaryco/AtomicTestHarnesses/blob/master/TestHarnesses/T1218.005_Mshta/InvokeHTMLApplication.ps1
+- https://github.com/redcanaryco/AtomicTestHarnesses/blob/master/TestHarnesses/T1218.005_Mshta/InvokeHTMLApplication.Tests.ps1
+tags:
+- attack.T1218.005	
+- attack.defense_evasion
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection
+  selection:
+    Image|contains:
+    - rundll32.exe
+    CommandLine|contains:
+    - vbscript
+    - javascript
+    - about
+fields:
+- CommandLine
+falsepositives:
+- none
+level: high
