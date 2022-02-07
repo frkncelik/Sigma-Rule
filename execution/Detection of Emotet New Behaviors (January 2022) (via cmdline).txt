@@ -1,0 +1,29 @@
+title: Detection of Emotet New Behaviors (January 2022) (via cmdline)
+description: Emotet is a malware strain and a cybercriminal operation believed to be based in Ukraine. You can detect new behaviors within this rule.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1059
+date: 2022/02/03
+references:
+- https://github.com/pr0xylife/Emotet/blob/main/e5_emotet_31.01.2022.txt
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    CommandLine|contains|all:
+    - /c
+    - choice /C Y /N /D Y /T 3
+    - start /B /WAIT
+    - powershell -enc
+    - \programdata
+    - .bat
+fields:
+- Image
+- CommandLine
+falsepositives:
+- none
+level: high
