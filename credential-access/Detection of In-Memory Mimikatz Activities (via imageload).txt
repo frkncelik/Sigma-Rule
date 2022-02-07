@@ -1,0 +1,29 @@
+title: Detection of In-Memory Mimikatz Activities (via imageload)
+description: Mimikatz is used to steal credentials. It needs other native Windows DLLs installed on the disk to be able to perform these operations.
+author: Furkan Celik
+status: stable
+tags:
+- attack.credential_access
+- attack.T1003
+date: 2022/02/01
+references:
+- https://sra.io/blog/detecting-in-memory-mimikatz/
+- https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for.html
+logsource:
+  product: windows
+  category: image_load
+detection:
+  condition: selection 
+  selection:
+    ImageLoaded|contains|all:
+    - WinSCard.dll
+    - cryptdll.dll
+    - hid.dll
+    - samlib.dll
+    - vaultcli.dll
+fields:
+- ImageLoaded
+- Image
+falsepositives:
+- Exclude known authenticating applications.
+level: high
