@@ -1,0 +1,30 @@
+title: Detection Of Attempts To Run Script Processes Using CMD.exe (via process creation)
+description: It gives output when wscript.exe and cscript.exe are run by cmd.exe. Groups such as emotet can use this situation. Observe this situation. Because wscript.exe and cscript.exe executables are likely to run malicious code.
+author: Furkan Celik
+status: stable
+tags:
+- attack.execution
+- attack.T1059
+date: 2022/02/02
+references:
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wscript
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cscript
+- local
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  condition: selection 
+  selection:
+    ParentImage|endswith:
+    - cmd.exe
+    Image|endswith:
+    - cscript.exe
+    - wscript.exe
+fields:
+- ParentImage
+- Image
+- CommandLine
+falsepositives:
+- Exclude known system and software scripts and commands
+level: high
